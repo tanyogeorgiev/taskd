@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useUserState } from '../context/user/UserProvider';
 import logout from '../context/user/actions/logout';
 import { useTaskState } from '../context/task/TaskProvider';
+import DarkModeToggle from './DarkModeToggle';
 
 const Header = ({ title }) => {
     const location = useLocation();
@@ -52,6 +53,7 @@ const Header = ({ title }) => {
                     <Link to="/about"> About </Link>
                 </li>
             </ul>
+            <DarkModeToggle />
         </header>
     );
 };

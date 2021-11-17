@@ -14,7 +14,6 @@ const Task = ({ task }) => {
         >
             <h3>
                 {task.text}
-
                 <div className="icons">
                     <Link to={`/addtask/${task.id}`} className="rightPadding">
                         {' '}

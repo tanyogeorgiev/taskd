@@ -16,14 +16,14 @@ const Tasks = () => {
             }
         };
         getTasks();
-    });
+    }, [user]);
 
     return (
-        <>
+        <div className="content">
             {tasks.map((task) => (
                 <Task key={task.id} task={task} />
             ))}
-        </>
+        </div>
     );
 };
 

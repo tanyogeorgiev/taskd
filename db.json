@@ -1,10 +1,18 @@
 {
   "tasks": [
     {
+      "text": "DW",
+      "day": "wd",
+      "reminder": true,
+      "userId": 1,
+      "id": 1
     }
   ],
   "users": [
     {
+      "name": "Admin",
+      "isAdmin": false,
+      "id": 1
     }
   ]
 }
