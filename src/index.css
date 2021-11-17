@@ -186,3 +186,10 @@ body.dark .header {
 body.dark .task {
     --background-color: var(--darkblue);
 }
+h3 {
+    text-align: center;
+    color: rgb(252, 165, 36);
+}
+.task.draft {
+    background: rgb(120, 153, 131);
+}

@@ -4,18 +4,22 @@ import deleteTask from '../context/task/actions/deleteTask';
 import toggleReminder from '../context/task/actions/toggleReminder';
 import { useTaskState } from '../context/task/TaskProvider';
 
-const Task = ({ task }) => {
+const Task = ({ task, draft }) => {
     const { dispatch } = useTaskState();
-
+    const onToggleReminder = (id) => {
+        if (!draft) toggleReminder(task.id)(dispatch);
+    };
     return (
         <div
-            className={`task ${task.reminder ? 'reminder' : ''}`}
-            onDoubleClick={() => toggleReminder(task.id)(dispatch)}
+            className={`task ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''}`}
+            onDoubleClick={() => onToggleReminder(task.id)}
         >
+            {' '}
+            {draft && <i>Draft</i>}
             <h3>
                 {task.text}
                 <div className="icons">
-                    <Link to={`/addtask/${task.id}`} className="rightPadding">
+                    <Link to={`/addtask/${!draft ? task.id : ''}`} className="rightPadding">
                         {' '}
                         <FaEdit style={{ color: 'lightslategrey' }} />
                     </Link>
@@ -26,7 +30,6 @@ const Task = ({ task }) => {
                     />
                 </div>
             </h3>
-
             <p>{task.day}</p>
             <p>{task.id}</p>
         </div>

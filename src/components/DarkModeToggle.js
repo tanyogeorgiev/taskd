@@ -3,7 +3,7 @@ import { useDarkModeState } from '../context/theme/ThemeProvider';
 import '../DarkMode.css';
 
 const DarkMode = () => {
-    const { darkTheme, setDarkTheme } = useDarkModeState(); //useDarkMode();
+    const { darkTheme, setDarkTheme } = useDarkModeState(); 
     const [clickedClass, setClickedClass] = useState('clicked');
 
     const changeMode = (e) => {
