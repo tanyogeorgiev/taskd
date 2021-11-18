@@ -74,14 +74,26 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: #152027d2;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
+.task p {
+    display: flex;
+    background: #c7ab9513;
+    border-radius: 5px;
+    padding-left: 10px;
+    margin-bottom: 2px;
+}
 .add-form {
     margin-bottom: 40px;
 }
 
 .form-control {
-    margin: 20px 0;
+    margin: auto;
+    max-width: 40%;
 }
 
 .form-control label {

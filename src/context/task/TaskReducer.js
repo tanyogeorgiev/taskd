@@ -1,5 +1,12 @@
 import taskInitialState from './taskInitialState';
-import { GET_TASKS, ADD_TASK, EDIT_TASK, LOGOUT_USER, DELETE_TASKS } from '../../constants';
+import {
+    GET_TASKS,
+    ADD_TASK,
+    EDIT_TASK,
+    LOGOUT_USER,
+    DELETE_TASKS,
+    REORDER_TASKS,
+} from '../../constants';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -35,6 +42,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 tasks: taskInitialState.tasks,
+            };
+
+        case REORDER_TASKS:
+            return {
+                ...state,
+                tasks: action.payload,
             };
         default:
             return state;

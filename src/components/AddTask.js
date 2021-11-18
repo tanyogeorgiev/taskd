@@ -92,10 +92,11 @@ const AddTask = () => {
                         FROM<b style={{ color: 'silver' }}> DRAFT</b>
                     </span>
                 )}
-            </h3>
+   
             {localDraft && isAddMode && (
-                <Button color="salmon" text="Clear Draft" onClick={onClearDraft} />
+                <div   ><Button color="salmon" text="Clear Draft" onClick={onClearDraft} /> </div>
             )}
+                     </h3>
             <form className="add-form" onSubmit={onSubmit}>
                 <div className="form-control">
                     <label>Task</label>
@@ -124,13 +125,14 @@ const AddTask = () => {
                         onChange={(e) => setReminder(e.currentTarget.checked)}
                     />
                 </div>
-
-                <input type="submit" value="Save Task" className="btn btn-block" />
+                    <div className="form-control">
+                <input type="submit" value="Save Task" className="btn btn-block" /></div>
                 {/* <Link to="/"> */}
 
                 {/* </Link> */}
             </form>
-            <Button
+            <div className="form-control">
+            <Button 
                 color="red"
                 text="Cancel"
                 onClick={() => {
@@ -139,6 +141,7 @@ const AddTask = () => {
             >
                 Close
             </Button>
+            </div>
         </>
     );
 };

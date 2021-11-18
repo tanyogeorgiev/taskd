@@ -1,8 +1,9 @@
+import { TASK_LOADING } from '../../../constants';
 import axiosWrapper from '../../../helper/axiosWrapper';
 
 const getTask = (payload) => async (dispatch) => {
     dispatch({
-        type: 'TASK_LOADING',
+        type: TASK_LOADING,
     });
 
     axiosWrapper()

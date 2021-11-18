@@ -4,11 +4,12 @@ import deleteTask from '../context/task/actions/deleteTask';
 import toggleReminder from '../context/task/actions/toggleReminder';
 import { useTaskState } from '../context/task/TaskProvider';
 
-const Task = ({ task, draft }) => {
+const Task = ({ task, draft, index }) => {
     const { dispatch } = useTaskState();
     const onToggleReminder = (id) => {
         if (!draft) toggleReminder(task.id)(dispatch);
     };
+
     return (
         <div
             className={`task ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''}`}
@@ -32,6 +33,7 @@ const Task = ({ task, draft }) => {
             </h3>
             <p>{task.day}</p>
             <p>{task.id}</p>
+            <p>{index}</p>
         </div>
     );
 };

@@ -42,17 +42,16 @@ const Login = ({ type }) => {
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                         />
-                    </div>
+                   
                     <input
                         type="submit"
                         value={currentLocation.pathname === '/login' ? 'Login' : 'Register'}
                         className="btn "
                     />
                     <Link to="/">
-                        <Button color="red" text="Cancel">
-                            Close
-                        </Button>
+                        <Button color="red" text="Cancel"/>                            
                     </Link>
+                    </div>
                 </form>
             </>
         </div>
