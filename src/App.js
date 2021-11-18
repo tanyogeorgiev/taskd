@@ -17,8 +17,8 @@ function App() {
             <DndProvider backend={HTML5Backend}>
                 <ThemeProvider>
                     <TaskProvider>
+                        <Header></Header>
                         <div className="content">
-                            <Header></Header>
                             <Routes>
                                 <Route path="/" exact element={<Tasks />} />
                                 <Route path="/addtask" element={<AddTask />} />
@@ -27,8 +27,8 @@ function App() {
                                 <Route path="/login" element={<Login type="login" />} />
                                 <Route path="/register" element={<Login type="register" />} />
                             </Routes>
-                            <Footer />
                         </div>
+                        <Footer />
                     </TaskProvider>
                 </ThemeProvider>
             </DndProvider>

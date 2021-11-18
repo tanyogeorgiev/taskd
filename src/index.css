@@ -5,6 +5,14 @@
     margin: 0;
     padding: 0;
 }
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+}
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -12,13 +20,24 @@ body {
     height: 100%;
 }
 
+.content {
+    padding-top: 60px;
+}
+
 .container {
     height: 100%;
     overflow: auto;
     margin: 5px;
-    padding-top: 30px;
+    padding-top: 80px;
     min-height: 200px;
     min-width: 200px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin-bottom: 40px;
 }
 
 .header {
@@ -155,8 +174,17 @@ li a {
 .rightPadding {
     margin-right: 20px;
 }
+.leftPadding {
+    margin-left: 20px;
+}
 .icons:hover {
     color: deepskyblue;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
 }
 
 /* Dark Theme */

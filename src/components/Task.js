@@ -12,7 +12,7 @@ const Task = ({ task, draft, index }) => {
 
     return (
         <div
-            className={`task ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''}`}
+            className={`task ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''} card`}
             onDoubleClick={() => onToggleReminder(task.id)}
         >
             {' '}
@@ -32,8 +32,6 @@ const Task = ({ task, draft, index }) => {
                 </div>
             </h3>
             <p>{task.day}</p>
-            <p>{task.id}</p>
-            <p>{index}</p>
         </div>
     );
 };

@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTaskState } from '../context/task/TaskProvider';
 import Button from './Button';
 import addTask from '../context/task/actions/addTask';
@@ -92,11 +92,12 @@ const AddTask = () => {
                         FROM<b style={{ color: 'silver' }}> DRAFT</b>
                     </span>
                 )}
-   
-            {localDraft && isAddMode && (
-                <div   ><Button color="salmon" text="Clear Draft" onClick={onClearDraft} /> </div>
-            )}
-                     </h3>
+                {localDraft && isAddMode && (
+                    <div>
+                        <Button color="salmon" text="Clear Draft" onClick={onClearDraft} />{' '}
+                    </div>
+                )}
+            </h3>
             <form className="add-form" onSubmit={onSubmit}>
                 <div className="form-control">
                     <label>Task</label>
@@ -125,22 +126,23 @@ const AddTask = () => {
                         onChange={(e) => setReminder(e.currentTarget.checked)}
                     />
                 </div>
-                    <div className="form-control">
-                <input type="submit" value="Save Task" className="btn btn-block" /></div>
+                <div className="form-control">
+                    <input type="submit" value="Save Task" className="btn btn-block" />
+                </div>
                 {/* <Link to="/"> */}
 
                 {/* </Link> */}
             </form>
             <div className="form-control">
-            <Button 
-                color="red"
-                text="Cancel"
-                onClick={() => {
-                    onCancelTask(true);
-                }}
-            >
-                Close
-            </Button>
+                <Button
+                    color="red"
+                    text="Cancel"
+                    onClick={() => {
+                        onCancelTask(true);
+                    }}
+                >
+                    Close
+                </Button>
             </div>
         </>
     );
