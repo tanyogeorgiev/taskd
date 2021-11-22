@@ -4,6 +4,8 @@ import {
     FaSearch,
     FaSortAlphaDown,
     FaSortAlphaDownAlt,
+    FaSortAmountDown,
+    FaSortAmountDownAlt,
     FaSortNumericDown,
     FaSortNumericDownAlt,
 } from 'react-icons/fa';
@@ -25,7 +27,7 @@ const SortableTasks = ({ children }) => {
     return (
         <div>
             <div className={'leftPadding rightPadding'} style={{ float: 'left' }}>
-                <b> title </b>{' '}
+                <b style={{ color: 'lightpink' }}> title </b>{' '}
                 <FaSortAlphaDown
                     size={20}
                     className={('leftPadding', 'rightPadding')}
@@ -42,7 +44,7 @@ const SortableTasks = ({ children }) => {
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAlphaDownAlt>
-                <b>day</b>{' '}
+                <b style={{ color: 'lightpink' }}>day</b>{' '}
                 <FaSortNumericDown
                     size={20}
                     className={('leftPadding', 'rightPadding')}
@@ -59,7 +61,24 @@ const SortableTasks = ({ children }) => {
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortNumericDownAlt>
-                <b>search</b>{' '}
+                <b style={{ color: 'lightpink' }}>priority</b>{' '}
+                <FaSortAmountDownAlt
+                    size={20}
+                    className={('leftPadding', 'rightPadding')}
+                    onClick={() => {
+                        sortTaskAsc('priority')(dispatch);
+                    }}
+                    style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
+                ></FaSortAmountDownAlt>
+                <FaSortAmountDown
+                    size={20}
+                    className={('leftPadding', 'rightPadding')}
+                    onClick={() => {
+                        sortTaskDesc('priority')(dispatch);
+                    }}
+                    style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
+                ></FaSortAmountDown>
+                <b style={{ color: 'lightpink' }}>search</b>{' '}
                 <FaSearch
                     size={20}
                     className={('leftPadding', 'rightPadding')}

@@ -53,6 +53,7 @@ const AddTask = () => {
                 reminder: data.reminder,
                 imgUrl: data.imgUrl,
                 orderId: Number.MAX_SAFE_INTEGER,
+                priority: data.priority,
                 userId: user.data.id,
             };
             addTask(newTask)(dispatch);
@@ -65,6 +66,7 @@ const AddTask = () => {
                 reminder: data.reminder,
                 imgUrl: data.imgUrl,
                 orderId: data.orderId,
+                priority: data.priority,
                 userId: task.userId,
             };
             updateTask(updatedTask)(dispatch);
@@ -189,7 +191,20 @@ const AddTask = () => {
                             Image width is Bigger than 150 px !!!!!!!
                         </div>
                     )}
-                    {console.log(errors)}
+                </div>
+                <div className="form-control form-control-select">
+                    <label>Priority</label>
+                    <select {...register('priority')} name="priority">
+                        <option style={{ color: 'mediumaquamarine' }} value="1">
+                            Low
+                        </option>
+                        <option value="2" style={{ color: 'sandybrown' }}>
+                            Normal
+                        </option>
+                        <option value="3" style={{ color: 'tomato' }}>
+                            High
+                        </option>
+                    </select>
                 </div>
                 <div className="form-control form-control-check">
                     <label>Set Reminder</label>

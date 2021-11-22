@@ -1,4 +1,4 @@
-import { FaTimes, FaEdit } from 'react-icons/fa';
+import { FaTimes, FaEdit, FaFireAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import deleteTask from '../../context/task/actions/deleteTask';
 import toggleReminder from '../../context/task/actions/toggleReminder';
@@ -15,6 +15,19 @@ const Task = ({ task, draft }) => {
               timeStyle: 'long',
           }).format(new Date(task.day))
         : '';
+
+    const priorityColor = () => {
+        switch (task.priority) {
+            case '1':
+                return 'mediumaquamarine';
+            case '2':
+                return 'sandybrown';
+            case '3':
+                return 'tomato';
+            default:
+                return 'sandybrown';
+        }
+    };
     return (
         <div
             className={`task ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''} card`}
@@ -28,6 +41,12 @@ const Task = ({ task, draft }) => {
                 <h3>
                     {task.text}
                     <div className="icons">
+                        {task.priority && (
+                            <FaFireAlt
+                                className="rightPadding"
+                                style={{ color: priorityColor() }}
+                            ></FaFireAlt>
+                        )}
                         <Link to={`/addtask/${!draft ? task.id : ''}`} className="rightPadding">
                             {' '}
                             <FaEdit style={{ color: 'lightslategrey' }} />

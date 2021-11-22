@@ -132,6 +132,12 @@ header {
     padding: 3px 7px;
     font-size: 17px;
 }
+.form-control select {
+    height: 40px;
+    margin: 5px;
+    padding: 3px 7px;
+    font-size: 17px;
+}
 
 .form-control-check {
     display: flex;
@@ -146,6 +152,19 @@ header {
 .form-control-check input {
     flex: 2;
     height: 20px;
+}
+.form-control-select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.form-control-select label {
+    flex: 1;
+}
+
+.form-control-select select {
+    flex: 2;
+    height: 40px;
 }
 
 footer {
