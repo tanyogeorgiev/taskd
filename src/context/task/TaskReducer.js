@@ -6,7 +6,9 @@ import {
     LOGOUT_USER,
     DELETE_TASKS,
     REORDER_TASKS,
+    SORT_TASK,
 } from '../../constants';
+import compareValues from '../../helper/compareValues';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -49,6 +51,12 @@ const reducer = (state, action) => {
                 ...state,
                 tasks: action.payload,
             };
+        case SORT_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.sort(compareValues(action.sortKey, action.sortType)),
+            };
+
         default:
             return state;
     }

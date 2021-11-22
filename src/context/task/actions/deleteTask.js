@@ -1,3 +1,4 @@
+import { DELETE_TASKS } from '../../../constants';
 import axiosWrapper from '../../../helper/axiosWrapper';
 
 const deleteTask = (id) => async (dispatch) => {
@@ -5,7 +6,7 @@ const deleteTask = (id) => async (dispatch) => {
         .delete(`/tasks/${id}`)
         .then((res) => {
             dispatch({
-                type: 'DELETE_TASK',
+                type: DELETE_TASKS,
                 payload: id,
             });
         });

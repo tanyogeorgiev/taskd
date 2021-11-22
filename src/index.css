@@ -22,6 +22,8 @@ body {
 
 .content {
     padding-top: 60px;
+    min-height: 100%;
+    margin-bottom: 60px;
 }
 
 .container {
@@ -97,6 +99,8 @@ header {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 20px;
+    border-bottom: 1px solid rgba(231, 249, 255, 0.433);
+    border-top: 3px solid rgba(81, 214, 255, 0.405);
 }
 
 .task p {
@@ -105,6 +109,7 @@ header {
     border-radius: 5px;
     padding-left: 10px;
     margin-bottom: 2px;
+    padding: 3px;
 }
 .add-form {
     margin-bottom: 40px;
@@ -145,10 +150,11 @@ header {
 
 footer {
     position: fixed;
-    padding: 10px 10px 0px 10px;
+    background-color: rgb(124, 124, 124);
     bottom: 0;
     width: 100%;
-    height: 60px;
+    padding-top: 15px;
+    height: 50px;
     text-align: center;
 }
 
@@ -232,4 +238,10 @@ h3 {
 }
 .task.draft {
     background: rgb(120, 153, 131);
+}
+.cardImg {
+    max-width: 60px;
+    clip-path: circle(30px at center);
+    display: block;
+    margin: auto;
 }

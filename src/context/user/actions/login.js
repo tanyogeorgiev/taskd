@@ -2,7 +2,7 @@ import { CHANGE_USER } from '../../../constants';
 import axiosWrapper from '../../../helper/axiosWrapper';
 
 const login = (user) => async (dispatch) => {
-    axiosWrapper()
+    await axiosWrapper()
         .get(`/users?name=${user}`)
         .then((res) => {
             const userData = res.data[0];
@@ -15,7 +15,12 @@ const login = (user) => async (dispatch) => {
                     type: CHANGE_USER,
                     payload: userData,
                 });
+            } else {
+                throw Error('Invalid username');
             }
+        })
+        .catch((err) => {
+            throw err;
         });
 };
 

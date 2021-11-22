@@ -11,7 +11,7 @@ const Login = ({ type }) => {
     const navigate = useNavigate();
     const { dispatch } = useUserState();
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         if (!userName) {
@@ -19,15 +19,20 @@ const Login = ({ type }) => {
         }
 
         if (type === 'login') {
-            login(userName)(dispatch);
+            await login(userName)(dispatch)
+                .then(() => {
+                    navigate('/');
+                })
+                .catch((err) => {
+                    alert(err);
+                });
         }
 
         if (type === 'register') {
-            register(userName)(dispatch);
+            register(userName)(dispatch).catch((err) => {
+                alert(err);
+            });
         }
-
-        setUserName('');
-        navigate('/');
     };
 
     return (
@@ -42,15 +47,15 @@ const Login = ({ type }) => {
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                         />
-                   
-                    <input
-                        type="submit"
-                        value={currentLocation.pathname === '/login' ? 'Login' : 'Register'}
-                        className="btn "
-                    />
-                    <Link to="/">
-                        <Button color="red" text="Cancel"/>                            
-                    </Link>
+
+                        <input
+                            type="submit"
+                            value={currentLocation.pathname === '/login' ? 'Login' : 'Register'}
+                            className="btn "
+                        />
+                        <Link to="/">
+                            <Button color="red" text="Cancel" />
+                        </Link>
                     </div>
                 </form>
             </>

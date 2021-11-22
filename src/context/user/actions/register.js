@@ -6,13 +6,24 @@ const register = (userName) => async (dispatch) => {
         name: userName,
         isAdmin: false,
     };
-    axiosWrapper()
-        .post('/users', newUser)
-        .then((res) => {
-            dispatch({
-                type: CHANGE_USER,
-                payload: res.data,
-            });
+    await axiosWrapper()
+        .get(`/users?name=${userName}`)
+        .then(async (res) => {
+            const userData = res.data[0];
+            if (userData && userData.name === userName) {
+                throw Error('Username already exists!');
+            }
+            return axiosWrapper()
+                .post('/users', newUser)
+                .then((res) => {
+                    dispatch({
+                        type: CHANGE_USER,
+                        payload: res.data,
+                    });
+                });
+        })
+        .catch((err) => {
+            throw err;
         });
 };
 

@@ -6,3 +6,6 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const CHANGE_USER = 'CHANGE_USER';
 export const TASK_LOADING = 'TASK_LOADING';
 export const REORDER_TASKS = 'REORDER_TASKS';
+export const SORT_TASK = 'SORT_TASK_ASC';
+export const ASC = 'ASC';
+export const DESC = 'DESC';

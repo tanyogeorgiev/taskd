@@ -1,4 +1,4 @@
-import { TASK_LOADING } from '../../../constants';
+import { GET_TASKS, TASK_LOADING } from '../../../constants';
 import axiosWrapper from '../../../helper/axiosWrapper';
 
 const getTask = (payload) => async (dispatch) => {
@@ -10,7 +10,7 @@ const getTask = (payload) => async (dispatch) => {
         .get(`/tasks?userId=${payload}`)
         .then((res) => {
             dispatch({
-                type: 'GET_TASKS',
+                type: GET_TASKS,
                 payload: res.data,
             });
         });

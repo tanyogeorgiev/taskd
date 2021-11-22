@@ -1,3 +1,4 @@
+import { EDIT_TASK } from '../../../constants';
 import axiosWrapper from '../../../helper/axiosWrapper';
 
 const toggleReminder = (id) => async (dispatch) => {
@@ -9,7 +10,7 @@ const toggleReminder = (id) => async (dispatch) => {
         })
         .then((res) => {
             dispatch({
-                type: 'EDIT_TASK',
+                type: EDIT_TASK,
                 payload: res.data,
             });
         })

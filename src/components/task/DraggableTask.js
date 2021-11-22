@@ -1,10 +1,9 @@
 import { useDrag, useDrop } from 'react-dnd';
-import { ItemTypes } from '../constants/itemTypes';
 import { useCallback, useRef } from 'react';
-import reorderTask from '../context/task/actions/reorderTasks';
 import update from 'immutability-helper';
-
-import { useTaskState } from '../context/task/TaskProvider';
+import { ItemTypes } from '../../constants/itemTypes';
+import reorderTask from '../../context/task/actions/reorderTasks';
+import { useTaskState } from '../../context/task/TaskProvider';
 
 const DraggableTask = ({ children }) => {
     const { tasks, dispatch } = useTaskState();
@@ -65,6 +64,10 @@ const DraggableTask = ({ children }) => {
                     [dragIndex, 1],
                     [hoverIndex, 0, dragCard],
                 ],
+            });
+            newOrder.map((task, i) => {
+                localStorage.setItem(`order_${task.id}`, i);
+                return (task.orderId = i);
             });
             reorderTask(newOrder)(dispatch);
         },
