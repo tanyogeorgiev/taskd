@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTaskState } from '../../context/task/TaskProvider';
 import Button from '../Button';
@@ -7,6 +7,7 @@ import updateTask from '../../context/task/actions/updateTask';
 import { useUserState } from '../../context/user/UserProvider';
 import useLocalStorage from '../../hooks/use-local-storage';
 import { useForm } from 'react-hook-form';
+import * as taskService from '../../api/services/Tasks';
 
 const AddTask = () => {
     const {
@@ -56,8 +57,10 @@ const AddTask = () => {
                 priority: data.priority,
                 userId: user.data.id,
             };
-            addTask(newTask)(dispatch);
-            setDraft();
+            taskService.add(newTask).then((res) => {
+                addTask(res.data, dispatch);
+                setDraft();
+            });
         } else {
             const updatedTask = {
                 id: parseInt(id),
@@ -69,12 +72,14 @@ const AddTask = () => {
                 priority: data.priority,
                 userId: task.userId,
             };
-            updateTask(updatedTask)(dispatch);
+            taskService.update(updatedTask).then((res) => {
+                updateTask(res.data, dispatch);
+            });
         }
         navigate('/');
     };
 
-    const onCancelTask = (rdr) => {
+    const onCancelTask = useCallback((rdr) => {
         if (isAddMode) {
             if (text() || day() || reminder()) {
                 setDraft({
@@ -86,7 +91,7 @@ const AddTask = () => {
             }
         }
         if (rdr) navigate('/');
-    };
+    }, []);
 
     const onClearDraft = () => {
         setDraft();
@@ -102,7 +107,7 @@ const AddTask = () => {
             onCancelTask(false);
         }, SECONDS_MS);
         return () => clearInterval(interval);
-    }, [formState]);
+    }, [formState, onCancelTask]);
 
     useEffect(() => {
         const getTask = (data) => {

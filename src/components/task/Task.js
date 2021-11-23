@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import deleteTask from '../../context/task/actions/deleteTask';
 import toggleReminder from '../../context/task/actions/toggleReminder';
 import { useTaskState } from '../../context/task/TaskProvider';
+import * as taskService from '../../api/services/Tasks';
 
 const Task = ({ task, draft }) => {
     const { dispatch } = useTaskState();
     const onToggleReminder = (id) => {
-        if (!draft) toggleReminder(task.id)(dispatch);
+        taskService.toggleReminder(id).then((res) => {
+            toggleReminder(res.data, dispatch);
+        });
     };
     const formatedDay = task.day
         ? new Intl.DateTimeFormat('en-US', {
@@ -28,6 +31,13 @@ const Task = ({ task, draft }) => {
                 return 'sandybrown';
         }
     };
+
+    const onDeleteTask = (id) => {
+        taskService.remove(id).then(() => {
+            deleteTask(id, dispatch);
+        });
+    };
+
     return (
         <div
             className={`task ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''} card`}
@@ -55,7 +65,7 @@ const Task = ({ task, draft }) => {
                         {!draft && (
                             <FaTimes
                                 style={{ color: 'tomato', cursor: 'pointer' }}
-                                onClick={() => deleteTask(task.id)(dispatch)}
+                                onClick={() => onDeleteTask(task.id)}
                             />
                         )}
                     </div>

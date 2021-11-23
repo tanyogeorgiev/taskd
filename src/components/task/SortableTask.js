@@ -13,12 +13,15 @@ import searchTasks from '../../context/task/actions/searchTask';
 import sortTaskAsc from '../../context/task/actions/sortTaskAsc';
 import sortTaskDesc from '../../context/task/actions/sortTaskDesc';
 import { useTaskState } from '../../context/task/TaskProvider';
+import * as taskService from '../../api/services/Tasks';
 
 const SortableTasks = ({ children }) => {
     const { dispatch } = useTaskState();
 
     const onSearchChange = (e) => {
-        searchTasks(e.target.value)(dispatch);
+        taskService.search(e.target.value).then((res) => {
+            searchTasks(res.data, dispatch);
+        });
     };
     const debouncedSearch = useMemo(() => {
         return debounce(onSearchChange, 300);
@@ -32,7 +35,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskAsc('text')(dispatch);
+                        sortTaskAsc('text', dispatch);
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAlphaDown>
@@ -40,7 +43,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={'rightPadding'}
                     onClick={() => {
-                        sortTaskDesc('text')(dispatch);
+                        sortTaskDesc('text', dispatch);
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAlphaDownAlt>
@@ -49,7 +52,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskAsc('day')(dispatch);
+                        sortTaskAsc('day', dispatch);
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortNumericDown>
@@ -57,7 +60,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskDesc('day')(dispatch);
+                        sortTaskDesc('day', dispatch);
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortNumericDownAlt>
@@ -66,7 +69,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskAsc('priority')(dispatch);
+                        sortTaskAsc('priority', dispatch);
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAmountDownAlt>
@@ -74,7 +77,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskDesc('priority')(dispatch);
+                        sortTaskDesc('priority', dispatch);
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAmountDown>

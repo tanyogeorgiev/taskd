@@ -30,7 +30,6 @@ const reducer = (state, action) => {
 
         case EDIT_TASK:
             const updatedTask = action.payload;
-
             return {
                 ...state,
                 tasks: state.tasks.map((item) => {

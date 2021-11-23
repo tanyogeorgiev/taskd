@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { FaBorderAll, FaList } from 'react-icons/fa';
+
 import getTask from '../../context/task/actions/getTasks';
 import { useTaskState } from '../../context/task/TaskProvider';
 import { useUserState } from '../../context/user/UserProvider';
 import useLocalStorage from '../../hooks/use-local-storage';
-import { ErrorBoundary } from 'react-error-boundary';
+import * as taskService from '../../api/services/Tasks';
 
 import Task from './Task';
 import DraggableTask from './DraggableTask';
-import { FaBorderAll, FaList } from 'react-icons/fa';
 import SortableTasks from './SortableTask';
 
 const Tasks = () => {
@@ -18,13 +20,12 @@ const Tasks = () => {
     const [cardLayout, setCardLayout] = useState(false);
 
     useEffect(() => {
-        const getTasks = async () => {
-            if (user.data.id && tasks.length === 0) {
-                getTask(user.data.id)(dispatch);
-            }
-        };
-        getTasks();
-    }, [user]);
+        if (user.data.id && tasks.length === 0) {
+            taskService.get(user.data.id).then((res) => {
+                getTask(res.data, dispatch);
+            });
+        }
+    }, [tasks.length, dispatch, user.data.id]);
 
     const renderCard = (task, index) => {
         task.orderId = task.orderId ? task.orderId : index;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const axiosWrapper = (history = null) => {
+const axiosInstance = (navigate = null) => {
     const baseURL = process.env.REACT_APP_BACKEND_URL;
 
     let headers = {};
@@ -29,8 +29,8 @@ const axiosWrapper = (history = null) => {
             if (error.response.status === 403) {
                 localStorage.removeItem('token');
 
-                if (history) {
-                    history.push('/login');
+                if (navigate) {
+                    navigate('/login');
                 } else {
                     window.location = '/login';
                 }
@@ -45,4 +45,4 @@ const axiosWrapper = (history = null) => {
     return axiosInstance;
 };
 
-export default axiosWrapper;
+export default axiosInstance;

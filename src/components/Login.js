@@ -4,6 +4,7 @@ import Button from './Button';
 import login from '../context/user/actions/login';
 import register from '../context/user/actions/register';
 import { useUserState } from '../context/user/UserProvider';
+import * as userService from '../api/services/Users';
 
 const Login = ({ type }) => {
     const currentLocation = useLocation();
@@ -19,8 +20,10 @@ const Login = ({ type }) => {
         }
 
         if (type === 'login') {
-            await login(userName)(dispatch)
-                .then(() => {
+            await userService
+                .login(userName)
+                .then((res) => {
+                    login(res.data[0], dispatch);
                     navigate('/');
                 })
                 .catch((err) => {

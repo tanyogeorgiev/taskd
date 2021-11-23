@@ -71,7 +71,7 @@ const DraggableTask = ({ children }) => {
             });
             reorderTask(newOrder)(dispatch);
         },
-        [tasks]
+        [tasks, dispatch]
     );
 
     const [{ isDragging }, drag] = useDrag({

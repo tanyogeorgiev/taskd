@@ -1,6 +1,6 @@
 import { REORDER_TASKS } from '../../../constants';
 
-const reorderTask = (payload) => async (dispatch) => {
+const reorderTask = (payload, dispatch) => {
     dispatch({
         type: REORDER_TASKS,
         payload,

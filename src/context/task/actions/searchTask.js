@@ -1,14 +1,9 @@
 import { GET_TASKS } from '../../../constants';
-import axiosWrapper from '../../../helper/axiosWrapper';
 
-const searchTasks = (payload) => (dispatch) => {
-    axiosWrapper()
-        .get(`/tasks?q=${payload}`)
-        .then((res) => {
-            dispatch({
-                type: GET_TASKS,
-                payload: res.data,
-            });
-        });
-};
+const searchTasks = (payload, dispatch) =>
+    dispatch({
+        type: GET_TASKS,
+        payload: payload,
+    });
+
 export default searchTasks;

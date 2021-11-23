@@ -1,6 +1,6 @@
 import { ASC, SORT_TASK } from '../../../constants';
 
-const sortTaskAsc = (key) => (dispatch) => {
+const sortTaskAsc = (key, dispatch) => {
     dispatch({
         type: SORT_TASK,
         sortType: ASC,

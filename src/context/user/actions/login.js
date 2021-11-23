@@ -1,27 +1,14 @@
 import { CHANGE_USER } from '../../../constants';
-import axiosWrapper from '../../../helper/axiosWrapper';
 
-const login = (user) => async (dispatch) => {
-    await axiosWrapper()
-        .get(`/users?name=${user}`)
-        .then((res) => {
-            const userData = res.data[0];
-            if (userData && userData.name === user) {
-                localStorage.setItem('userId', userData.id);
-                localStorage.setItem('userName', userData.name);
-                localStorage.setItem('token', res.token);
+const login = (user, dispatch) => {
+    localStorage.setItem('userId', user.id);
+    localStorage.setItem('userName', user.name);
+    localStorage.setItem('token', user.token);
 
-                dispatch({
-                    type: CHANGE_USER,
-                    payload: userData,
-                });
-            } else {
-                throw Error('Invalid username');
-            }
-        })
-        .catch((err) => {
-            throw err;
-        });
+    dispatch({
+        type: CHANGE_USER,
+        payload: user,
+    });
 };
 
 export default login;
