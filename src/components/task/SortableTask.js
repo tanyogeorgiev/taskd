@@ -10,13 +10,13 @@ import {
     FaSortNumericDownAlt,
 } from 'react-icons/fa';
 import searchTasks from '../../context/task/actions/searchTask';
-import sortTaskAsc from '../../context/task/actions/sortTaskAsc';
-import sortTaskDesc from '../../context/task/actions/sortTaskDesc';
 import { useTaskState } from '../../context/task/TaskProvider';
 import * as taskService from '../../api/services/Tasks';
+import compareValues from '../../helper/compareValues';
+import reorderTask from '../../context/task/actions/reorderTasks';
 
 const SortableTasks = ({ children }) => {
-    const { dispatch } = useTaskState();
+    const { tasks, dispatch } = useTaskState();
 
     const onSearchChange = (e) => {
         taskService.search(e.target.value).then((res) => {
@@ -27,6 +27,27 @@ const SortableTasks = ({ children }) => {
         return debounce(onSearchChange, 300);
     }, []);
 
+    const onSortTaskAsc = (sortKey) => {
+        console.log('sort ASC', tasks);
+        const newOrder = tasks.sort(compareValues(sortKey, 'ASC'));
+
+        newOrder.map((task, i) => {
+            localStorage.setItem(`order_${task.id}`, i);
+            return { ...task, orderId: i };
+        });
+        reorderTask(newOrder, dispatch);
+    };
+    const onSortTaskDesc = (sortKey) => {
+        console.log('sort DESC', tasks);
+
+        const newOrder = tasks.sort(compareValues(sortKey, 'DESC'));
+
+        newOrder.map((task, i) => {
+            localStorage.setItem(`order_${task.id}`, i);
+            return { ...task, orderId: i };
+        });
+        reorderTask(newOrder, dispatch);
+    };
     return (
         <div>
             <div className={'leftPadding rightPadding'} style={{ float: 'left' }}>
@@ -35,7 +56,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskAsc('text', dispatch);
+                        onSortTaskAsc('text');
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAlphaDown>
@@ -43,7 +64,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={'rightPadding'}
                     onClick={() => {
-                        sortTaskDesc('text', dispatch);
+                        onSortTaskDesc('text');
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAlphaDownAlt>
@@ -52,7 +73,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskAsc('day', dispatch);
+                        onSortTaskAsc('day');
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortNumericDown>
@@ -60,7 +81,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskDesc('day', dispatch);
+                        onSortTaskDesc('day');
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortNumericDownAlt>
@@ -69,7 +90,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskAsc('priority', dispatch);
+                        onSortTaskAsc('priority');
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAmountDownAlt>
@@ -77,7 +98,7 @@ const SortableTasks = ({ children }) => {
                     size={20}
                     className={('leftPadding', 'rightPadding')}
                     onClick={() => {
-                        sortTaskDesc('priority', dispatch);
+                        onSortTaskDesc('priority');
                     }}
                     style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
                 ></FaSortAmountDown>

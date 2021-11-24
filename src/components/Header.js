@@ -27,9 +27,9 @@ const Header = ({ title }) => {
             <p> Hello {user.data.name ? user.data.name : 'Guest'}</p>
 
             <ul>
-                {location.pathname === '/' && isAuthorized && (
+                {location.pathname === '/tasks/all' && isAuthorized && (
                     <li>
-                        <Link to="/addtask">Add Task</Link>
+                        <Link to="/tasks/add/">Add Task</Link>
                     </li>
                 )}
                 {!isAuthorized && (

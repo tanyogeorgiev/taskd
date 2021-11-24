@@ -14,6 +14,8 @@ function compareValues(key, order = 'ASC') {
         } else if (varA < varB) {
             comparison = -1;
         }
+        console.log(varA, varB, varA > varB, comparison);
+
         return order === 'DESC' ? comparison * -1 : comparison;
     };
 }

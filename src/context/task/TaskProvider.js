@@ -3,10 +3,9 @@ import taskInitialState from './taskInitialState';
 import TaskReducer from './TaskReducer';
 
 const GlobalContext = createContext(taskInitialState);
-
 const TaskProvider = ({ children }) => {
     const [state, dispatch] = useReducer(TaskReducer, taskInitialState);
-
+    console.log('task provider', state);
     return (
         <GlobalContext.Provider
             value={{
@@ -21,6 +20,7 @@ const TaskProvider = ({ children }) => {
 
 export const useTaskState = () => {
     const context = useContext(GlobalContext);
+    console.log('get task state', context.tasks);
     if (!context) {
         throw Error('Wrong usage');
     }

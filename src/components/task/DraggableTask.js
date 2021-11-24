@@ -65,11 +65,14 @@ const DraggableTask = ({ children }) => {
                     [hoverIndex, 0, dragCard],
                 ],
             });
+
             newOrder.map((task, i) => {
                 localStorage.setItem(`order_${task.id}`, i);
-                return (task.orderId = i);
+                return { ...task, orderId: i };
             });
-            reorderTask(newOrder)(dispatch);
+
+            reorderTask(newOrder, dispatch);
+            console.log('2');
         },
         [tasks, dispatch]
     );

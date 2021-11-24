@@ -9,7 +9,7 @@ const About = () => {
                 Current Theme mode is:
                 <DarkModeStatus />
             </h5>
-            <Link to="/">Go Back</Link>
+            <Link to="/tasks/all">View tasks.</Link>
         </div>
     );
 };

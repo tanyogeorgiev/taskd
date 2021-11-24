@@ -57,7 +57,7 @@ const Task = ({ task, draft }) => {
                                 style={{ color: priorityColor() }}
                             ></FaFireAlt>
                         )}
-                        <Link to={`/addtask/${!draft ? task.id : ''}`} className="rightPadding">
+                        <Link to={`/tasks/edit/${!draft ? task.id : ''}`} className="rightPadding">
                             {' '}
                             <FaEdit style={{ color: 'lightslategrey' }} />
                         </Link>
@@ -72,6 +72,8 @@ const Task = ({ task, draft }) => {
                 </h3>
             </div>
             <p>{formatedDay}</p>
+            <p>{task.id}</p>
+            <p>{task.orderId}</p>
         </div>
     );
 };

@@ -24,7 +24,7 @@ const Login = ({ type }) => {
                 .login(userName)
                 .then((res) => {
                     login(res.data[0], dispatch);
-                    navigate('/');
+                    navigate('/tasks/all');
                 })
                 .catch((err) => {
                     alert(err);
@@ -32,9 +32,14 @@ const Login = ({ type }) => {
         }
 
         if (type === 'register') {
-            register(userName)(dispatch).catch((err) => {
-                alert(err);
-            });
+            await userService
+                .register(userName)
+                .then((res) => {
+                    navigate('/login');
+                })
+                .catch((err) => {
+                    alert(err);
+                });
         }
     };
 
@@ -56,7 +61,7 @@ const Login = ({ type }) => {
                             value={currentLocation.pathname === '/login' ? 'Login' : 'Register'}
                             className="btn "
                         />
-                        <Link to="/">
+                        <Link to="/tasks/all">
                             <Button color="red" text="Cancel" />
                         </Link>
                     </div>

@@ -46,16 +46,11 @@ const reducer = (state, action) => {
             };
 
         case REORDER_TASKS:
+            console.log('reorder', action.payload);
             return {
                 ...state,
                 tasks: action.payload,
             };
-        case SORT_TASK:
-            return {
-                ...state,
-                tasks: state.tasks.sort(compareValues(action.sortKey, action.sortType)),
-            };
-
         default:
             return state;
     }

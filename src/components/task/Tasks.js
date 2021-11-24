@@ -20,12 +20,16 @@ const Tasks = () => {
     const [cardLayout, setCardLayout] = useState(false);
 
     useEffect(() => {
-        if (user.data.id && tasks.length === 0) {
-            taskService.get(user.data.id).then((res) => {
-                getTask(res.data, dispatch);
-            });
-        }
-    }, [tasks.length, dispatch, user.data.id]);
+        const getTasks = async () => {
+            if (user.data.id && tasks.length === 0) {
+                await taskService.get(user.data.id).then((res) => {
+                    getTask(res.data, dispatch);
+                });
+                console.log('fetch tasks');
+            }
+        };
+        getTasks();
+    }, [dispatch, user.data.id]);
 
     const renderCard = (task, index) => {
         task.orderId = task.orderId ? task.orderId : index;
@@ -45,6 +49,7 @@ const Tasks = () => {
             </div>
         );
     };
+
     return (
         <>
             {user.data.id && (
@@ -73,13 +78,10 @@ const Tasks = () => {
                     </h1>
                     <SortableTasks>
                         <div className={`content ${cardLayout ? 'cards' : ''}`}>
-                            {draft && user.data.id && (
-                                <Task key={draft.id} task={draft} draft={true} />
-                            )}
+                            {draft && user.data.id && <Task task={draft} draft={true} />}
                             {tasks
                                 .sort((a, b) => a.orderId - b.orderId)
                                 .map((task, i) => (
-                                    // <Task key={task.id} task={task} />
                                     <ErrorBoundary
                                         FallbackComponent={ErrorFallback}
                                         onReset={() => {}}

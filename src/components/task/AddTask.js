@@ -1,13 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTaskState } from '../../context/task/TaskProvider';
-import Button from '../Button';
-import addTask from '../../context/task/actions/addTask';
-import updateTask from '../../context/task/actions/updateTask';
-import { useUserState } from '../../context/user/UserProvider';
 import useLocalStorage from '../../hooks/use-local-storage';
 import { useForm } from 'react-hook-form';
+
+import { useTaskState } from '../../context/task/TaskProvider';
+import { useUserState } from '../../context/user/UserProvider';
+
+import updateTask from '../../context/task/actions/updateTask';
+import addTask from '../../context/task/actions/addTask';
+
 import * as taskService from '../../api/services/Tasks';
+
+import Button from '../Button';
 
 const AddTask = () => {
     const {
@@ -33,6 +37,9 @@ const AddTask = () => {
 
     const task = tasks.find((task) => task.id === parseInt(id));
     const isAddMode = !id;
+
+    console.log('ADDD', isAddMode);
+
     const SECONDS_MS = 5000;
 
     const text = () => getValues('text');
@@ -57,7 +64,7 @@ const AddTask = () => {
                 priority: data.priority,
                 userId: user.data.id,
             };
-            taskService.add(newTask).then((res) => {
+            await taskService.add(newTask).then(async (res) => {
                 addTask(res.data, dispatch);
                 setDraft();
             });
@@ -72,11 +79,12 @@ const AddTask = () => {
                 priority: data.priority,
                 userId: task.userId,
             };
-            taskService.update(updatedTask).then((res) => {
+            await taskService.update(updatedTask).then((res) => {
                 updateTask(res.data, dispatch);
             });
         }
-        navigate('/');
+
+        navigate('/tasks/all');
     };
 
     const onCancelTask = useCallback((rdr) => {
@@ -90,7 +98,7 @@ const AddTask = () => {
                 });
             }
         }
-        if (rdr) navigate('/');
+        if (rdr) navigate('/tasks/all');
     }, []);
 
     const onClearDraft = () => {
