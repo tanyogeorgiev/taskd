@@ -72,8 +72,6 @@ const Task = ({ task, draft }) => {
                 </h3>
             </div>
             <p>{formatedDay}</p>
-            <p>{task.id}</p>
-            <p>{task.orderId}</p>
         </div>
     );
 };

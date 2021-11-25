@@ -44,7 +44,6 @@ const reducer = (state, action) => {
             };
 
         case REORDER_TASKS:
-            console.log('reorder', action.payload);
             return {
                 ...state,
                 tasks: action.payload,

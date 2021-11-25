@@ -14,7 +14,7 @@ import * as taskService from '../../api/services/Tasks';
 import Button from '../Button';
 
 const AddTask = () => {
-    const { register, handleSubmit, getValues, setValue, formState, reset } = useForm();
+    const { register, handleSubmit, getValues, setValue, formState, reset, watch } = useForm();
 
     //url params and navigation
     const { id } = useParams();
@@ -32,6 +32,7 @@ const AddTask = () => {
     const isAddMode = !id;
 
     console.log('ADDD', isAddMode);
+
     const onSubmit = async (data) => {
         const formTask = {
             text: '',
@@ -39,11 +40,10 @@ const AddTask = () => {
             reminder: '',
             imgUrl: '',
             orderId: '',
-            priority: '',
-            userId: '',
+            priority: data.priority,
+            userId: user.data.id,
             ...data.regInput,
         };
-
         if (isAddMode) {
             await taskService
                 .add({ ...formTask, orderId: Number.MAX_SAFE_INTEGER })
@@ -69,9 +69,9 @@ const AddTask = () => {
 
     const onCancelTask = useCallback(
         (rdr) => {
+            console.log('onCancel');
             if (isAddMode) {
                 if (!isInputsEmpty()) {
-                    console.log('valid');
                     setDraft(getValues().regInput);
                 }
             }
@@ -105,8 +105,6 @@ const AddTask = () => {
         });
     };
 
-    console.log(formState.errors.regInput);
-
     return (
         <>
             <h3>
@@ -127,7 +125,6 @@ const AddTask = () => {
                 <div className="form-control">
                     <label>Task</label>
                     <input
-                        name="text"
                         type="text"
                         placeholder="Add Task"
                         // value={text}
@@ -143,10 +140,8 @@ const AddTask = () => {
                 <div className="form-control">
                     <label>Day & Time</label>
                     <input
-                        name="day"
                         type="datetime-local"
                         placeholder="Add Day & Time"
-                        //value={day}
                         {...register('regInput.day', {
                             required: {
                                 value: true,
@@ -158,14 +153,13 @@ const AddTask = () => {
                 <div className="form-control">
                     <label>Image URL</label>
                     <input
-                        name="imgUrl"
                         type="text"
                         placeholder="Add Image URL"
                         {...register('regInput.imgUrl', {
                             validate: checkImageWidth(),
                         })}
                     />
-                    {getValues('imgUrl') && (
+                    {getValues('regInput.imgUrl') && (
                         <img
                             alt="task"
                             style={{ maxWidth: '200px', clipPath: 'circle(190px at center)' }}
@@ -173,7 +167,6 @@ const AddTask = () => {
                         ></img>
                     )}
                     <input
-                        name="imgUrlWidth"
                         type="hidden"
                         {...register('regInput.imgUrlWidth', {
                             validate: (value) => value <= 1500,
@@ -196,7 +189,7 @@ const AddTask = () => {
                 </div>
                 <div className="form-control form-control-select">
                     <label>Priority</label>
-                    <select {...register('regInput.priority')} name="priority">
+                    <select {...register('regInput.priority')}>
                         <option style={{ color: 'mediumaquamarine' }} value="1">
                             Low
                         </option>

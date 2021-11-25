@@ -35,7 +35,7 @@ const Tasks = () => {
         task.orderId = task.orderId ? task.orderId : index;
         return (
             <DraggableTask>
-                <Task key={task.id} index={index} task={task} />
+                <Task key={index} index={index} task={task} />
             </DraggableTask>
         );
     };

@@ -29,7 +29,6 @@ const SortableTasks = ({ children }) => {
     }, [dispatch]);
 
     const onSortTaskAsc = (sortKey) => {
-        console.log('sort ASC', tasks);
         const newOrder = tasks.sort(compareValues(sortKey, 'ASC'));
 
         newOrder.map((task, i) => {
@@ -39,8 +38,6 @@ const SortableTasks = ({ children }) => {
         reorderTask(newOrder, dispatch);
     };
     const onSortTaskDesc = (sortKey) => {
-        console.log('sort DESC', tasks);
-
         const newOrder = tasks.sort(compareValues(sortKey, 'DESC'));
 
         newOrder.map((task, i) => {
