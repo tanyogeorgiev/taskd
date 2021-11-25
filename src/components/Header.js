@@ -16,7 +16,7 @@ const Header = ({ title }) => {
 
     const logoutUser = () => {
         removeUser();
-        logout()(dispatch);
+        logout(dispatch);
     };
 
     return (

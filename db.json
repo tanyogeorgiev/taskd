@@ -1,31 +1,4 @@
 {
-  "tasks": [
-    {
-      "text": "A  ",
-      "day": "2021-11-24T16:56",
-      "reminder": false,
-      "imgUrl": "",
-      "orderId": 9007199254740991,
-      "priority": "1",
-      "userId": 1,
-      "id": 1
-    },
-    {
-      "text": "B d",
-      "day": "2021-11-24T16:56",
-      "reminder": false,
-      "imgUrl": "",
-      "orderId": 9007199254740991,
-      "priority": "3",
-      "userId": 1,
-      "id": 2
-    }
-  ],
-  "users": [
-    {
-      "name": "t",
-      "isAdmin": false,
-      "id": 1
-    }
-  ]
+  "tasks": [],
+  "users": []
 }

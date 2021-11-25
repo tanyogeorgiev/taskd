@@ -15,6 +15,7 @@ const Layout = () => {
                 <Route path="tasks/*" element={<TaskPage />} />
             </Routes>
             <Header />
+            <Outlet />
             <Footer />
         </>
     );

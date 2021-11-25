@@ -6,9 +6,7 @@ import {
     LOGOUT_USER,
     DELETE_TASKS,
     REORDER_TASKS,
-    SORT_TASK,
 } from '../../constants';
-import compareValues from '../../helper/compareValues';
 
 const reducer = (state, action) => {
     switch (action.type) {

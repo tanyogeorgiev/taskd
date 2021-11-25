@@ -29,7 +29,7 @@ const Tasks = () => {
             }
         };
         getTasks();
-    }, [dispatch, user.data.id]);
+    }, [dispatch, user.data.id, tasks.length]);
 
     const renderCard = (task, index) => {
         task.orderId = task.orderId ? task.orderId : index;

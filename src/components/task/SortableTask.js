@@ -18,14 +18,15 @@ import reorderTask from '../../context/task/actions/reorderTasks';
 const SortableTasks = ({ children }) => {
     const { tasks, dispatch } = useTaskState();
 
-    const onSearchChange = (e) => {
-        taskService.search(e.target.value).then((res) => {
-            searchTasks(res.data, dispatch);
-        });
-    };
     const debouncedSearch = useMemo(() => {
+        const onSearchChange = (e) => {
+            taskService.search(e.target.value).then((res) => {
+                searchTasks(res.data, dispatch);
+            });
+        };
+
         return debounce(onSearchChange, 300);
-    }, []);
+    }, [dispatch]);
 
     const onSortTaskAsc = (sortKey) => {
         console.log('sort ASC', tasks);

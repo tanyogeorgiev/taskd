@@ -35,6 +35,7 @@ const Login = ({ type }) => {
             await userService
                 .register(userName)
                 .then((res) => {
+                    register(res.data,  dispatch);
                     navigate('/login');
                 })
                 .catch((err) => {

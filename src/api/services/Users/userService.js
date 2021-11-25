@@ -19,7 +19,7 @@ export async function register(userName) {
         name: userName,
         isAdmin: false,
     };
-    await axiosInstance()
+    return axiosInstance()
         .get(`/users?name=${userName}`)
         .then(async (res) => {
             const userData = res.data[0];
