@@ -14,7 +14,7 @@ import * as taskService from '../../api/services/Tasks';
 import Button from '../Button';
 
 const AddTask = () => {
-    const { register, handleSubmit, getValues, setValue, formState, reset, watch } = useForm();
+    const { register, handleSubmit, getValues, setValue, formState, reset } = useForm();
 
     //url params and navigation
     const { id } = useParams();

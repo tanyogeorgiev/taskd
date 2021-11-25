@@ -1,9 +1,10 @@
 import { useDrag, useDrop } from 'react-dnd';
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import update from 'immutability-helper';
 import { ItemTypes } from '../../constants/itemTypes';
 import reorderTask from '../../context/task/actions/reorderTasks';
 import { useTaskState } from '../../context/task/TaskProvider';
+import { debounce } from 'lodash';
 
 const DraggableTask = ({ children }) => {
     const { tasks, dispatch } = useTaskState();
@@ -56,8 +57,8 @@ const DraggableTask = ({ children }) => {
         },
     });
 
-    const moveCard = useCallback(
-        (dragIndex, hoverIndex) => {
+    const moveCard = useMemo(() => {
+        const moveCardDebounce = (dragIndex, hoverIndex) => {
             const dragCard = tasks[dragIndex];
             const newOrder = update(tasks, {
                 $splice: [
@@ -72,10 +73,10 @@ const DraggableTask = ({ children }) => {
             });
 
             reorderTask(newOrder, dispatch);
-            console.log('2');
-        },
-        [tasks, dispatch]
-    );
+        };
+
+        return debounce(moveCardDebounce, 1);
+    }, [tasks, dispatch]);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.TASK,
@@ -86,10 +87,10 @@ const DraggableTask = ({ children }) => {
             isDragging: monitor.isDragging(),
         }),
     });
-    const opacity = isDragging ? 0 : 1;
+
     drag(drop(ref));
     return (
-        <div ref={ref} style={{ opacity }} data-handler-id={handlerId}>
+        <div ref={ref} style={{ opacity: isDragging ? 0 : 1 }} data-handler-id={handlerId}>
             {children}
         </div>
     );

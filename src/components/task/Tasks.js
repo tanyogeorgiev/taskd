@@ -32,10 +32,9 @@ const Tasks = () => {
     }, [dispatch, user.data.id, tasks.length]);
 
     const renderCard = (task, index) => {
-        task.orderId = task.orderId ? task.orderId : index;
         return (
-            <DraggableTask>
-                <Task key={index} index={index} task={task} />
+            <DraggableTask key={task.id}>
+                <Task index={index} task={task} />
             </DraggableTask>
         );
     };
