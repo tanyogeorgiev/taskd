@@ -48,9 +48,8 @@ const Tasks = () => {
             </div>
         );
     };
-
     return (
-        <>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
             {user.data.id && (
                 <>
                     <h1 className={'leftPadding ,  rightPadding'} style={{ float: 'right' }}>
@@ -78,21 +77,12 @@ const Tasks = () => {
                     <SortableTasks>
                         <div className={`content ${cardLayout ? 'cards' : ''}`}>
                             {draft && user.data.id && <Task task={draft} draft={true} />}
-                            {tasks
-                                .sort((a, b) => a.orderId - b.orderId)
-                                .map((task, i) => (
-                                    <ErrorBoundary
-                                        FallbackComponent={ErrorFallback}
-                                        onReset={() => {}}
-                                    >
-                                        <div className="col"> {renderCard(task, i)}</div>
-                                    </ErrorBoundary>
-                                ))}
+                            {tasks.map((task, i) => renderCard(task, i))}
                         </div>
                     </SortableTasks>
                 </>
             )}
-        </>
+        </ErrorBoundary>
     );
 };
 export default Tasks;

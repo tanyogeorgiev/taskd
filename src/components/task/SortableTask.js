@@ -8,16 +8,18 @@ import {
     FaSortAmountDownAlt,
     FaSortNumericDown,
     FaSortNumericDownAlt,
+    FaStar,
 } from 'react-icons/fa';
 import searchTasks from '../../context/task/actions/searchTask';
 import { useTaskState } from '../../context/task/TaskProvider';
 import * as taskService from '../../api/services/Tasks';
 import compareValues from '../../helper/compareValues';
 import reorderTask from '../../context/task/actions/reorderTasks';
+import { useUserState } from '../../context/user/UserProvider';
 
 const SortableTasks = ({ children }) => {
     const { tasks, dispatch } = useTaskState();
-
+    const { user } = useUserState();
     const debouncedSearch = useMemo(() => {
         const onSearchChange = (e) => {
             taskService.search(e.target.value).then((res) => {
@@ -28,6 +30,15 @@ const SortableTasks = ({ children }) => {
         return debounce(onSearchChange, 300);
     }, [dispatch]);
 
+    const onCustomOrder = () => {
+        const newOrder = tasks.sort((a, b) => {
+            return (
+                localStorage.getItem(`order_${user.data.id}_${a.id}`) -
+                localStorage.getItem(`order_${user.data.id}_${b.id}`)
+            );
+        });
+        reorderTask(newOrder, dispatch);
+    };
     const onSortTaskAsc = (sortKey) => {
         const newOrder = tasks.sort(compareValues(sortKey, 'ASC'));
 
@@ -49,6 +60,15 @@ const SortableTasks = ({ children }) => {
     return (
         <div>
             <div className={'leftPadding rightPadding'} style={{ float: 'left' }}>
+                <b style={{ color: 'lightpink' }}> my order </b>{' '}
+                <FaStar
+                    size={20}
+                    className={('leftPadding', 'rightPadding')}
+                    onClick={() => {
+                        onCustomOrder();
+                    }}
+                    style={{ color: true ? 'lightblue' : 'tomato', cursor: 'pointer' }}
+                />
                 <b style={{ color: 'lightpink' }}> title </b>{' '}
                 <FaSortAlphaDown
                     size={20}

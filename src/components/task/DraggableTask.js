@@ -5,11 +5,12 @@ import { ItemTypes } from '../../constants/itemTypes';
 import reorderTask from '../../context/task/actions/reorderTasks';
 import { useTaskState } from '../../context/task/TaskProvider';
 import { debounce } from 'lodash';
+import { useUserState } from '../../context/user/UserProvider';
 
 const DraggableTask = ({ children }) => {
     const { tasks, dispatch } = useTaskState();
     //dnd
-
+    const { user } = useUserState();
     const ref = useRef(null);
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.TASK,
@@ -48,7 +49,7 @@ const DraggableTask = ({ children }) => {
                 return;
             }
             // Time to actually perform the action
-            moveCard(dragIndex, hoverIndex);
+            moveTask(dragIndex, hoverIndex);
             // Note: we're mutating the monitor item here!
             // Generally it's better to avoid mutations,
             // but it's good here for the sake of performance
@@ -57,18 +58,18 @@ const DraggableTask = ({ children }) => {
         },
     });
 
-    const moveCard = useMemo(() => {
+    const moveTask = useMemo(() => {
         const moveCardDebounce = (dragIndex, hoverIndex) => {
-            const dragCard = tasks[dragIndex];
+            const dragTask = tasks[dragIndex];
             const newOrder = update(tasks, {
                 $splice: [
                     [dragIndex, 1],
-                    [hoverIndex, 0, dragCard],
+                    [hoverIndex, 0, dragTask],
                 ],
             });
 
             newOrder.map((task, i) => {
-                localStorage.setItem(`order_${task.id}`, i);
+                localStorage.setItem(`order_${user.data.id}_${task.id}`, i);
                 return { ...task, orderId: i };
             });
 
