@@ -1,15 +1,14 @@
 import '../App.css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useUserState } from '../context/user/UserProvider';
 import logout from '../context/user/actions/logout';
 import { useTaskState } from '../context/task/TaskProvider';
 import DarkModeToggle from './DarkModeToggle';
+import { Flex, Text, Spacer, Heading } from '@chakra-ui/react';
 
 const Header = ({ title }) => {
-    const location = useLocation();
     const { user, removeUser } = useUserState();
     const isAuthorized = user.data.id;
     const { dispatch } = useTaskState();
@@ -20,41 +19,78 @@ const Header = ({ title }) => {
     };
 
     return (
-        <header className="header">
-            <div>
-                <h1>{title}</h1>
-            </div>
-            <p> Hello {user.data.name ? user.data.name : 'Guest'}</p>
+        //<header className="header">
+        <>
+            <Flex
+                as="header"
+                wrap="nowrap"
+                position="fixed"
+                backgroundColor="rgb(26, 39, 48)"
+                alignItems="center"
+                justifyContent="space-between"
+                w="100%"
+                zIndex="999999"
+            >
+                <Flex alignItems="center">
+                    <Text as="span" fontSize="4xl" color="cyan.600" pr={1}>
+                        {title}
+                    </Text>
+                </Flex>
+                <Flex alignItems="center">
+                    {!isAuthorized && (
+                        <>
+                            <Link to="/login">
+                                <Text as="span" color="cyan.600" pr={5}>
+                                    LOGIN
+                                </Text>
+                            </Link>
+                            <Spacer />
+                            <Link to="/register">
+                                <Text as="span" color="cyan.600" pr={5}>
+                                    REGISTER
+                                </Text>
+                            </Link>
+                            <Spacer />
+                        </>
+                    )}
+                    {isAuthorized && (
+                        <>
+                            <Text as="span" fontSize="1xl" color="pink.50" pl={1} pr={5}>
+                                Hello, {user.data.name ? user.data.name : 'Guest'}
+                            </Text>
+                            <Spacer />
+                            <Link to="/" onClick={logoutUser}>
+                                <Text as="span" color="cyan.600" pr={5}>
+                                    LOGOUT
+                                </Text>
+                            </Link>
+                            <Spacer />
+                        </>
+                    )}
+                    <Link to="/about">
+                        <Text as="span" color="cyan.600" pr={5}>
+                            ABOUT
+                        </Text>
+                    </Link>
+                    <Spacer />
 
-            <ul>
-                {location.pathname === '/tasks/all' && isAuthorized && (
-                    <li>
-                        <Link to="/tasks/add/">Add Task</Link>
-                    </li>
-                )}
-                {!isAuthorized && (
-                    <>
-                        <li>
-                            <Link to="/login">Login</Link>
-                        </li>
-                        <li>
-                            <Link to="/register">Register</Link>
-                        </li>
-                    </>
-                )}
-                {isAuthorized && (
-                    <li>
-                        <Link to="/" onClick={logoutUser}>
-                            Logout
-                        </Link>
-                    </li>
-                )}
-                <li>
-                    <Link to="/about"> About </Link>
-                </li>
-            </ul>
-            <DarkModeToggle />
-        </header>
+                    <DarkModeToggle />
+                </Flex>
+            </Flex>
+            {!isAuthorized && (
+                <>
+                    <Heading pt={10} as="h1" size="4xl" color="gray.600">
+                        Wellcome to{' '}
+                        <Text as="span" color="gray.800">
+                            TASKD.
+                        </Text>
+                    </Heading>
+                    <Text color="gray.400" fontSize="4xl" as="i">
+                        Be more productive❤️
+                    </Text>
+                </>
+            )}
+        </>
     );
 };
 

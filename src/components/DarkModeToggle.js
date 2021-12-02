@@ -1,22 +1,45 @@
-import React, { useState } from 'react';
-import { useDarkModeState } from '../context/theme/ThemeProvider';
-import '../DarkMode.css';
+import { useColorMode, Stack, Switch, IconButton } from '@chakra-ui/react';
+import { FaMoon, FaSun } from 'react-icons/fa';
 
 const DarkMode = () => {
-    const { darkTheme, setDarkTheme } = useDarkModeState(); 
-    const [clickedClass, setClickedClass] = useState('clicked');
+    const { colorMode, toggleColorMode } = useColorMode();
 
-    const changeMode = (e) => {
-        setDarkTheme(!darkTheme);
-        setClickedClass('');
-        e.target.blur();
+    const onButtonsClick = (buttonMode) => {
+        if (buttonMode === colorMode) return;
+        toggleColorMode();
     };
     return (
-        <button
-            className={darkTheme ? clickedClass : ''}
-            id="darkMode"
-            onClick={(e) => changeMode(e)}
-        ></button>
+        <>
+            <Stack direction="row" alignItems="center">
+                <IconButton
+                    variant="unstyled"
+                    colorScheme="Orange"
+                    icon={
+                        <FaSun
+                            style={{ margin: 'auto' }}
+                            size={25}
+                            color={colorMode !== 'dark' ? 'gold' : 'gray'}
+                        />
+                    }
+                    p={0}
+                    marginLeft="0"
+                    onClick={() => onButtonsClick('light')}
+                />
+                <Switch
+                    colorScheme="orange"
+                    size="lg"
+                    style={{ margin: 'auto' }}
+                    onChange={toggleColorMode}
+                    isChecked={colorMode === 'dark'}
+                />
+                <IconButton
+                    variant="unstyled"
+                    colorScheme="Orange"
+                    icon={<FaMoon size={25} color={colorMode === 'dark' ? 'gold' : 'gray'} />}
+                    onClick={() => onButtonsClick('dark')}
+                />
+            </Stack>
+        </>
     );
 };
 

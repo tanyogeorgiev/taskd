@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import register from '../../context/user/actions/register';
 import { useUserState } from '../../context/user/UserProvider';
 import * as userService from '../../api/services/Users';
-import TextInput from '../common/TextInput';
-import SubmitInput from '../common/SubmitInput';
+import { Input, InputGroup, InputLeftElement, Button, Stack } from '@chakra-ui/react';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -29,17 +29,21 @@ const Register = () => {
     };
 
     return (
-        <div>
-            <>
-                <form className="add-form" onSubmit={onSubmit}>
-                    <div className="form-control">
-                        <TextInput placeholder="Enter username" label="Username" />
+        <form onSubmit={onSubmit} style={{ width: '500px', margin: 'auto' }}>
+            <Stack spacing={3} align="center">
+                <InputGroup>
+                    <InputLeftElement
+                        pointerEvents="none"
+                        children={<FaUserCircle color="gray.300" />}
+                    />
+                    <Input placeholder="Enter username" label="Username" />
+                </InputGroup>
 
-                        <SubmitInput type="submit" value="Register" className="btn " />
-                    </div>
-                </form>
-            </>
-        </div>
+                <Button colorScheme="teal" variant="outline" type="submit">
+                    Register
+                </Button>
+            </Stack>
+        </form>
     );
 };
 

@@ -1,4 +1,4 @@
-import { REORDER_TASKS } from '../../../constants';
+import { REORDER_TASKS } from '../../actionTypes';
 
 const reorderTask = (payload, dispatch) => {
     console.log('reorder');

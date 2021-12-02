@@ -1,4 +1,4 @@
-import { ADD_TASK } from '../../../constants';
+import { ADD_TASK } from '../../actionTypes';
 
 const addTask = async (payload, dispatch) =>
     dispatch({

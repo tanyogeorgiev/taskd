@@ -1,5 +1,5 @@
 import { useDrag, useDrop } from 'react-dnd';
-import { useCallback, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import update from 'immutability-helper';
 import { ItemTypes } from '../../constants/itemTypes';
 import reorderTask from '../../context/task/actions/reorderTasks';
@@ -77,7 +77,7 @@ const DraggableTask = ({ children }) => {
         };
 
         return debounce(moveCardDebounce, 1);
-    }, [tasks, dispatch]);
+    }, [tasks, dispatch, user.data.id]);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.TASK,
@@ -91,7 +91,11 @@ const DraggableTask = ({ children }) => {
 
     drag(drop(ref));
     return (
-        <div ref={ref} style={{ opacity: isDragging ? 0 : 1 }} data-handler-id={handlerId}>
+        <div
+            ref={ref}
+            style={{ opacity: isDragging ? 0 : 1, cursor: 'pointer' }}
+            data-handler-id={handlerId}
+        >
             {children}
         </div>
     );

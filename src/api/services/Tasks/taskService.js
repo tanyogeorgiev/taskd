@@ -9,8 +9,9 @@ export function remove(payload) {
 export function get(payload) {
     return axiosInstance().get(`/tasks?userId=${payload}`);
 }
-export function search(payload) {
-    return axiosInstance().get(`/tasks?q=${payload}`);
+export function search(payload, userId) {
+    // return axiosInstance().get(`/tasks?q=${payload}`);
+    return axiosInstance().get(`/tasks?text_like=${payload}&userId=${userId}`);
 }
 export async function toggleReminder(id) {
     const res = await axiosInstance().get(`tasks/${id}`);

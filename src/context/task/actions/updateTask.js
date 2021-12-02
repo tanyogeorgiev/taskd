@@ -1,4 +1,4 @@
-import { EDIT_TASK } from '../../../constants';
+import { EDIT_TASK } from '../../actionTypes';
 const updateTask = (payload, dispatch) =>
     dispatch({
         type: EDIT_TASK,

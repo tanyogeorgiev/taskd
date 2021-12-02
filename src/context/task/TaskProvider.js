@@ -1,10 +1,10 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import taskInitialState from './taskInitialState';
 import TaskReducer from './TaskReducer';
-
 const GlobalContext = createContext(taskInitialState);
 const TaskProvider = ({ children }) => {
     const [state, dispatch] = useReducer(TaskReducer, taskInitialState);
+
     console.log('task provider', state);
     return (
         <GlobalContext.Provider

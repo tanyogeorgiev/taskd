@@ -1,9 +1,10 @@
-import { FaTimes, FaEdit, FaFireAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaTimes, FaFireAlt, FaCheckDouble } from 'react-icons/fa';
 import deleteTask from '../../context/task/actions/deleteTask';
 import toggleReminder from '../../context/task/actions/toggleReminder';
 import { useTaskState } from '../../context/task/TaskProvider';
 import * as taskService from '../../api/services/Tasks';
+import { Tag, Flex, Box, Text, IconButton } from '@chakra-ui/react';
+import EditTaskModal from './EditTaskModal';
 
 const Task = ({ task, draft }) => {
     const { dispatch } = useTaskState();
@@ -39,40 +40,58 @@ const Task = ({ task, draft }) => {
     };
 
     return (
-        <div
-            className={`task ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''} card`}
+        <Box
+            bg="gray.700"
+            rounded="md"
+            boxShadow="lg"
+            p="5"
+            className={`  ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''}`}
             onDoubleClick={() => onToggleReminder(task.id)}
         >
-            {' '}
-            {draft && <i>Draft</i>}
-            <div>
-                {task.imgUrl && <img className="cardImg" src={task.imgUrl} alt="taskImage"></img>}
+            <Box>{draft && <Tag>Draft</Tag>}</Box>
 
-                <h3>
-                    {task.text}
-                    <div className="icons">
-                        {task.priority && (
-                            <FaFireAlt
-                                className="rightPadding"
-                                style={{ color: priorityColor() }}
-                            ></FaFireAlt>
-                        )}
-                        <Link to={`/tasks/edit/${!draft ? task.id : ''}`} className="rightPadding">
-                            {' '}
-                            <FaEdit style={{ color: 'lightslategrey' }} />
-                        </Link>
+            <Flex justifyContent="space-between">
+                <Flex alignItems="center">
+                    {task.imgUrl && (
+                        <img className="cardImg" src={task.imgUrl} alt="taskImage"></img>
+                    )}
 
-                        {!draft && (
-                            <FaTimes
-                                style={{ color: 'tomato', cursor: 'pointer' }}
-                                onClick={() => onDeleteTask(task.id)}
-                            />
-                        )}
-                    </div>
-                </h3>
-            </div>
-            <p>{formatedDay}</p>
-        </div>
+                    <IconButton
+                        icon={
+                            task.priority && (
+                                <FaFireAlt
+                                    size={30}
+                                    className="rightPadding"
+                                    style={{ color: priorityColor() }}
+                                ></FaFireAlt>
+                            )
+                        }
+                        variant="unstyled"
+                    />
+                    <IconButton
+                        icon={task.reminder && <FaCheckDouble size={30} color="mediumaquamarine" />}
+                        variant="unstyled"
+                    />
+                    <Text fontSize="4xl" color="rgb(136 165 197)">
+                        {task.text}
+                    </Text>
+                </Flex>
+                <Flex wrap="nowrap" alignItems="center">
+                    <EditTaskModal task={task} />
+                    {/* <Link to={`/tasks/edit/${!draft ? task.id : ''}`} className="rightPadding">
+                        <FaEdit style={{ color: 'lightslategrey' }} size={30} />
+                    </Link> */}
+                    {!draft && (
+                        <FaTimes
+                            style={{ color: 'tomato', cursor: 'pointer' }}
+                            onClick={() => onDeleteTask(task.id)}
+                            size={30}
+                        />
+                    )}
+                </Flex>
+            </Flex>
+            <Box color="gray.200">{formatedDay}</Box>
+        </Box>
     );
 };
 

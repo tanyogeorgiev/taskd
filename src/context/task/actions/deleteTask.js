@@ -1,4 +1,4 @@
-import { DELETE_TASKS } from '../../../constants';
+import { DELETE_TASKS } from '../../actionTypes';
 
 const deleteTask = (id, dispatch) => {
     dispatch({

@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import login from '../../context/user/actions/login';
 import { useUserState } from '../../context/user/UserProvider';
 import * as userService from '../../api/services/Users';
-import TextInput from '../common/TextInput';
-import SubmitInput from '../common/SubmitInput';
+import { Input, InputGroup, InputLeftElement, Button, Stack, Container } from '@chakra-ui/react';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -29,17 +29,22 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <>
-                <form className="add-form" onSubmit={onSubmit}>
-                    <div className="form-control">
-                        <TextInput placeholder="Enter username" label="Username" />
-
-                        <SubmitInput type="submit" value="Login" className="btn " />
-                    </div>
-                </form>
-            </>
-        </div>
+        <Container>
+            <form onSubmit={onSubmit} style={{ width: '500px', margin: 'auto' }}>
+                <Stack spacing={3} align="center">
+                    <InputGroup>
+                        <InputLeftElement
+                            pointerEvents="none"
+                            children={<FaUserCircle color="gray.300" />}
+                        />
+                        <Input placeholder="Enter username" label="Username" />
+                    </InputGroup>
+                    <Button colorScheme="teal" variant="outline" type="submit">
+                        Login
+                    </Button>
+                </Stack>
+            </form>
+        </Container>
     );
 };
 

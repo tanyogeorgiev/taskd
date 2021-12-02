@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { FaBorderAll, FaList } from 'react-icons/fa';
 
 import getTask from '../../context/task/actions/getTasks';
 import { useTaskState } from '../../context/task/TaskProvider';
@@ -11,6 +10,12 @@ import * as taskService from '../../api/services/Tasks';
 import Task from './Task';
 import DraggableTask from './DraggableTask';
 import SortableTasks from './SortableTask';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import TaskLayoutToggle from './TaskLayoutToggle';
+import { SimpleGrid, Flex, Text } from '@chakra-ui/react';
+import AddTaskModal from './AddTaskModal';
+import AddTask from './AddTask';
 
 const Tasks = () => {
     const { tasks, dispatch } = useTaskState();
@@ -49,40 +54,40 @@ const Tasks = () => {
         );
     };
     return (
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-            {user.data.id && (
-                <>
-                    <h1 className={'leftPadding ,  rightPadding'} style={{ float: 'right' }}>
-                        <FaList
-                            className="rightPadding"
-                            onClick={() => {
-                                setCardLayout(false);
-                            }}
-                            style={{
-                                color: cardLayout ? 'lightblue' : 'tomato',
-                                cursor: 'pointer',
-                            }}
-                        ></FaList>
-
-                        <FaBorderAll
-                            onClick={() => {
-                                setCardLayout(true);
-                            }}
-                            style={{
-                                color: cardLayout ? 'tomato' : 'lightblue',
-                                cursor: 'pointer',
-                            }}
-                        ></FaBorderAll>
-                    </h1>
-                    <SortableTasks>
-                        <div className={`content ${cardLayout ? 'cards' : ''}`}>
-                            {draft && user.data.id && <Task task={draft} draft={true} />}
-                            {tasks.map((task, i) => renderCard(task, i))}
-                        </div>
-                    </SortableTasks>
-                </>
-            )}
-        </ErrorBoundary>
+        <DndProvider backend={HTML5Backend}>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                {user.data.id && (
+                    <>
+                        <Flex justifyContent="space-between">
+                            <TaskLayoutToggle
+                                onLayoutChange={setCardLayout}
+                                cardLayout={cardLayout}
+                            ></TaskLayoutToggle>
+                            <AddTaskModal>
+                                <AddTask />
+                            </AddTaskModal>
+                        </Flex>
+                        <SortableTasks>
+                            <SimpleGrid
+                                columns={` ${cardLayout ? '3' : '1'}`}
+                                spacing="6"
+                                bg="gray.50"
+                                p="3"
+                                alignItems="center"
+                            >
+                                {draft && user.data.id && <Task task={draft} draft={true} />}
+                                {tasks.map((task, i) => renderCard(task, i))}
+                            </SimpleGrid>
+                        </SortableTasks>
+                        {tasks?.length === 0 && (
+                            <Text fontSize="xl" color="gray.400" align="center" pt={5}>
+                                Well... nobody's here. Add some stuff 💪
+                            </Text>
+                        )}
+                    </>
+                )}
+            </ErrorBoundary>
+        </DndProvider>
     );
 };
 export default Tasks;

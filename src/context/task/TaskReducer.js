@@ -6,7 +6,7 @@ import {
     LOGOUT_USER,
     DELETE_TASKS,
     REORDER_TASKS,
-} from '../../constants';
+} from '../actionTypes';
 
 const reducer = (state, action) => {
     switch (action.type) {

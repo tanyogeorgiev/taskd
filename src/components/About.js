@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom';
 import DarkModeStatus from './DarkModeStatus';
+import { Box, Text } from '@chakra-ui/react';
 
 const About = () => {
     return (
-        <div>
-            <h4> Version 1.0.1</h4>
-            <h5>
+        <Box>
+            <Text> Version 1.0.1</Text>
+            <Text>
                 Current Theme mode is:
                 <DarkModeStatus />
-            </h5>
+            </Text>
             <Link to="/tasks/all">View tasks.</Link>
-        </div>
+        </Box>
     );
 };
 

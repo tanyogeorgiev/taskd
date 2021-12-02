@@ -1,4 +1,4 @@
-import { GET_TASKS, TASK_LOADING } from '../../../constants';
+import { GET_TASKS, TASK_LOADING } from '../../actionTypes';
 const getTask = (payload, dispatch) => {
     dispatch({
         type: TASK_LOADING,

@@ -1,4 +1,4 @@
-import { CHANGE_USER } from '../../../constants';
+import { CHANGE_USER } from '../../actionTypes';
 
 const login = (user, dispatch) => {
     localStorage.setItem('userId', user.id);
