@@ -30,13 +30,14 @@ const EditTask = ({ onCancel, task }) => {
 
     const onSubmit = async (data) => {
         console.log('SUBMITTING', data);
+
         const formTask = {
             text: '',
             day: '',
             reminder: '',
             imgUrl: '',
             orderId: '',
-            priority: data.priority,
+            priority: '',
             userId: user.data.id,
             ...data.regInput,
         };

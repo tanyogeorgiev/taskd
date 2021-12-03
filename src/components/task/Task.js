@@ -3,11 +3,12 @@ import deleteTask from '../../context/task/actions/deleteTask';
 import toggleReminder from '../../context/task/actions/toggleReminder';
 import { useTaskState } from '../../context/task/TaskProvider';
 import * as taskService from '../../api/services/Tasks';
-import { Tag, Flex, Box, Text, IconButton } from '@chakra-ui/react';
+import { Tag, Flex, Box, Text, IconButton, useColorModeValue } from '@chakra-ui/react';
 import EditTaskModal from './EditTaskModal';
 
 const Task = ({ task, draft }) => {
     const { dispatch } = useTaskState();
+
     const onToggleReminder = (id) => {
         taskService.toggleReminder(id).then((res) => {
             toggleReminder(res.data, dispatch);
@@ -41,9 +42,10 @@ const Task = ({ task, draft }) => {
 
     return (
         <Box
-            bg="gray.700"
+            bg={useColorModeValue('gray.50', 'gray.700')}
+            color={useColorModeValue('gray.700', 'gray.200')}
             rounded="md"
-            boxShadow="lg"
+            boxShadow="base"
             p="5"
             className={`  ${task.reminder ? 'reminder' : ''} ${draft ? 'draft' : ''}`}
             onDoubleClick={() => onToggleReminder(task.id)}
@@ -72,7 +74,11 @@ const Task = ({ task, draft }) => {
                         icon={task.reminder && <FaCheckDouble size={30} color="mediumaquamarine" />}
                         variant="unstyled"
                     />
-                    <Text fontSize="4xl" color="rgb(136 165 197)">
+                    <Text
+                        fontSize="4xl"
+                        // color="rgb(136 165 197)"
+                        color={useColorModeValue('gray.600', 'gray.200')}
+                    >
                         {task.text}
                     </Text>
                 </Flex>
@@ -90,7 +96,7 @@ const Task = ({ task, draft }) => {
                     )}
                 </Flex>
             </Flex>
-            <Box color="gray.200">{formatedDay}</Box>
+            <Box color={useColorModeValue('gray.600', 'gray.200')}>{formatedDay}</Box>
         </Box>
     );
 };

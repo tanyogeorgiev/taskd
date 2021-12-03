@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -14,6 +14,7 @@ import {
 
 const TaskForm = (props) => {
     const { register, handleSubmit, getValues, setValue, formState, reset } = useForm();
+    const [radioGroupValue, setRadioGroupValue] = useState(props.task.priority);
 
     const isInputsEmpty = useCallback(() => {
         return (
@@ -27,7 +28,6 @@ const TaskForm = (props) => {
         (rdr) => {
             console.log('onCancel');
             if (props.onSaveDraft) {
-                console.log('here', getValues('regInput.text'));
                 if (isInputsEmpty()) {
                     props.onSaveDraft(getValues().regInput);
                 }
@@ -48,8 +48,10 @@ const TaskForm = (props) => {
         console.log('useeffect', props.onReset);
         if (props.onReset) reset();
         const getTask = (data) => {
+            console.log('uEffect', data);
             if (data) {
                 setValue('regInput', data);
+                console.log(radioGroupValue);
             }
         };
 
@@ -66,7 +68,7 @@ const TaskForm = (props) => {
     return (
         <>
             <form className="add-form" onSubmit={handleSubmit(props.onFormSubmit)}>
-                <Stack spacing={5}>
+                <Stack spacing={5} paddingBottom="20px">
                     <FormControl id="first-name" isRequired>
                         <FormLabel>Title</FormLabel>
                         <Input
@@ -135,13 +137,12 @@ const TaskForm = (props) => {
 
                     <FormControl id="priority">
                         <FormLabel>Priority</FormLabel>
-                        <RadioGroup name="priority" label="Priority">
+                        <RadioGroup label="Priority" value={radioGroupValue}>
                             <Stack spacing={4} direction="row">
                                 <Radio
                                     colorScheme="green"
                                     size="lg"
                                     value="1"
-                                    name="priority"
                                     {...register('regInput.priority')}
                                 >
                                     Low
@@ -150,7 +151,6 @@ const TaskForm = (props) => {
                                     colorScheme="yellow"
                                     size="lg"
                                     value="2"
-                                    name="priority"
                                     {...register('regInput.priority')}
                                 >
                                     Normal
@@ -159,7 +159,6 @@ const TaskForm = (props) => {
                                     colorScheme="red"
                                     size="lg"
                                     value="3"
-                                    name="priority"
                                     {...register('regInput.priority')}
                                 >
                                     High

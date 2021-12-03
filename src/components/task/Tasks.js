@@ -13,7 +13,7 @@ import SortableTasks from './SortableTask';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskLayoutToggle from './TaskLayoutToggle';
-import { SimpleGrid, Flex, Text } from '@chakra-ui/react';
+import { SimpleGrid, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import AddTaskModal from './AddTaskModal';
 import AddTask from './AddTask';
 
@@ -23,7 +23,6 @@ const Tasks = () => {
     const draftName = 'draft-task' + user.data.id;
     const [draft] = useLocalStorage(draftName);
     const [cardLayout, setCardLayout] = useState(false);
-
     useEffect(() => {
         const getTasks = async () => {
             if (user.data.id && tasks.length === 0) {
@@ -71,7 +70,6 @@ const Tasks = () => {
                             <SimpleGrid
                                 columns={` ${cardLayout ? '3' : '1'}`}
                                 spacing="6"
-                                bg="gray.50"
                                 p="3"
                                 alignItems="center"
                             >
