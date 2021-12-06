@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -14,7 +14,6 @@ import {
 
 const TaskForm = (props) => {
     const { register, handleSubmit, getValues, setValue, formState, reset } = useForm();
-    const [radioGroupValue, setRadioGroupValue] = useState(props.task.priority);
 
     const isInputsEmpty = useCallback(() => {
         return (
@@ -45,13 +44,12 @@ const TaskForm = (props) => {
     );
 
     useEffect(() => {
-        console.log('useeffect', props.onReset);
+        console.log('useeffect', props.task.priority === '3');
         if (props.onReset) reset();
         const getTask = (data) => {
             console.log('uEffect', data);
             if (data) {
                 setValue('regInput', data);
-                console.log(radioGroupValue);
             }
         };
 
@@ -65,6 +63,7 @@ const TaskForm = (props) => {
             setValue('imgUrlWidth', this.width);
         });
     };
+
     return (
         <>
             <form className="add-form" onSubmit={handleSubmit(props.onFormSubmit)}>
@@ -74,7 +73,6 @@ const TaskForm = (props) => {
                         <Input
                             type="text"
                             placeholder="Title"
-                            // value={text}
                             {...register('regInput.text', {
                                 required: {
                                     value: true,
@@ -137,7 +135,7 @@ const TaskForm = (props) => {
 
                     <FormControl id="priority">
                         <FormLabel>Priority</FormLabel>
-                        <RadioGroup label="Priority" value={radioGroupValue}>
+                        <RadioGroup label="Priority" defaultValue={props.task.priority}>
                             <Stack spacing={4} direction="row">
                                 <Radio
                                     colorScheme="green"
