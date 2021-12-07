@@ -44,7 +44,6 @@ const TaskForm = (props) => {
     );
 
     useEffect(() => {
-        console.log('useeffect', props.task.priority === '3');
         if (props.onReset) reset();
         const getTask = (data) => {
             console.log('uEffect', data);
@@ -135,7 +134,7 @@ const TaskForm = (props) => {
 
                     <FormControl id="priority">
                         <FormLabel>Priority</FormLabel>
-                        <RadioGroup label="Priority" defaultValue={props.task.priority}>
+                        <RadioGroup label="Priority" defaultValue={props?.task?.priority}>
                             <Stack spacing={4} direction="row">
                                 <Radio
                                     colorScheme="green"
