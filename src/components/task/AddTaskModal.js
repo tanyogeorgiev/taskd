@@ -20,6 +20,7 @@ const AddTaskModal = () => {
             buttonType="variant"
             onCloseModal={closeModal}
             modalHeader=""
+            data-testid="addTaskSvg"
         >
             <AddTask onCancel={onCloseModal} />
         </ModalWrapper>

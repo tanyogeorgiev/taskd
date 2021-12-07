@@ -92,6 +92,7 @@ const Task = ({ task, draft }) => {
                             style={{ color: 'tomato', cursor: 'pointer' }}
                             onClick={() => onDeleteTask(task.id)}
                             size={30}
+                            data-testid="deleteTaskSvg"
                         />
                     )}
                 </Flex>

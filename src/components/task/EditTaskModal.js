@@ -12,7 +12,9 @@ const EditTaskModal = ({ task }) => {
 
     return (
         <ModalWrapper
-            buttonIcon={<FaEdit style={{ color: 'lightslategrey' }} size={30} />}
+            buttonIcon={
+                <FaEdit style={{ color: 'lightslategrey' }} size={30} data-testid="editTaskSvg" />
+            }
             buttonText=""
             buttonType="variant"
             onCloseModal={closeModal}
