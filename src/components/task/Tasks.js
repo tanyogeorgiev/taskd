@@ -13,7 +13,7 @@ import SortableTasks from './SortableTask';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskLayoutToggle from './TaskLayoutToggle';
-import { SimpleGrid, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { SimpleGrid, Flex, Text } from '@chakra-ui/react';
 import AddTaskModal from './AddTaskModal';
 import AddTask from './AddTask';
 
@@ -29,11 +29,10 @@ const Tasks = () => {
                 await taskService.get(user.data.id).then((res) => {
                     getTask(res.data, dispatch);
                 });
-                console.log('fetch tasks');
             }
         };
         getTasks();
-    }, [dispatch, user.data.id, tasks.length]);
+    }, [dispatch, user.data.id, tasks?.length]);
 
     const renderCard = (task, index) => {
         return (

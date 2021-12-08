@@ -5,8 +5,8 @@ import UserReducer from './UserReducer';
 
 const UserContext = createContext(userInitialState);
 
-const UserProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(UserReducer, userInitialState);
+const UserProvider = ({ children, value }, props) => {
+    const [state, dispatch] = useReducer(UserReducer, value ? value : userInitialState);
 
     return (
         <UserContext.Provider
@@ -26,7 +26,6 @@ export const useUserState = () => {
     if (!context) {
         throw Error('Wrong usage!');
     }
-
     return context;
 };
 

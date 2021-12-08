@@ -9,7 +9,6 @@ const TaskPage = () => {
             <Routes>
                 <Route path="all" exact element={<Tasks />} />
                 <Route path="add" exact element={<AddTask />} />
-                <Route path="edit" exact element={<AddTask />} />
                 <Route path="edit/:id" exact element={<EditTask />} />
             </Routes>
         </TaskProvider>
