@@ -19,14 +19,15 @@ const EditTask = ({ onCancel, task }) => {
     //Context states
     const { tasks, dispatch } = useTaskState();
     const { user } = useUserState();
+    let localTask = { ...task };
 
     if (!id) {
         id = task.id;
     } else {
-        task = tasks.find((task) => task.id === parseInt(id));
+        localTask = { ...tasks.find((task) => task.id === parseInt(id)) };
     }
 
-    console.log('EDIT');
+    console.log('EDIT', task);
 
     const onSubmit = async (data) => {
         console.log('SUBMITTING', data);
@@ -50,7 +51,7 @@ const EditTask = ({ onCancel, task }) => {
     };
 
     const onCancelTask = useCallback(() => {
-        console.log('onCancel');
+        console.log('onCancelTask  Edit Task');
         onCancel ? onCancel() : navigate('/tasks/all');
     }, [navigate, onCancel]);
 
@@ -61,7 +62,7 @@ const EditTask = ({ onCancel, task }) => {
             </Text>
             <TaskForm
                 onFormSubmit={onSubmit}
-                task={task}
+                task={localTask}
                 onCancel={onCancelTask}
                 submitText="SAVE"
             />

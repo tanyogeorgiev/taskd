@@ -7,7 +7,7 @@ const EditTaskModal = ({ task }) => {
     const [closeModal, setCloseModal] = useState(false);
 
     const onClose = () => {
-        setCloseModal(true);
+        setCloseModal(!closeModal);
     };
 
     return (

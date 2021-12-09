@@ -39,6 +39,7 @@ const TaskForm = (props) => {
                     props.onCancel();
                 }
             }
+            
         },
         [props, getValues, isInputsEmpty, reset]
     );
@@ -62,7 +63,7 @@ const TaskForm = (props) => {
             setValue('imgUrlWidth', this.width);
         });
     };
-
+    console.log('TASK FORM', props.task);
     return (
         <>
             <form className="add-form" onSubmit={handleSubmit(props.onFormSubmit)}>

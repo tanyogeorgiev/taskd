@@ -240,7 +240,6 @@ const SortableTasks = ({ children }) => {
                                     onSortTaskAsc('priority');
                                 }}
                             >
-                                {' '}
                                 Ascending
                             </MenuItem>
                         </MenuGroup>

@@ -1,28 +1,28 @@
 import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { SimpleGrid, Flex, Text } from '@chakra-ui/react';
 
 import getTask from '../../context/task/actions/getTasks';
 import { useTaskState } from '../../context/task/TaskProvider';
 import { useUserState } from '../../context/user/UserProvider';
-import useLocalStorage from '../../hooks/use-local-storage';
 import * as taskService from '../../api/services/Tasks';
 
 import Task from './Task';
 import DraggableTask from './DraggableTask';
 import SortableTasks from './SortableTask';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import TaskLayoutToggle from './TaskLayoutToggle';
-import { SimpleGrid, Flex, Text } from '@chakra-ui/react';
 import AddTaskModal from './AddTaskModal';
 import AddTask from './AddTask';
+import DraftTask from './DraftTask';
 
 const Tasks = () => {
     const { tasks, dispatch } = useTaskState();
     const { user } = useUserState();
-    const draftName = 'draft-task' + user.data.id;
-    const [draft] = useLocalStorage(draftName);
     const [cardLayout, setCardLayout] = useState(false);
+    const [draftChange, setDraftChange] = useState(true);
+
     useEffect(() => {
         const getTasks = async () => {
             if (user.data.id && tasks.length === 0) {
@@ -51,6 +51,11 @@ const Tasks = () => {
             </div>
         );
     };
+
+    const onCloseAddTaskModal = () => {
+        console.log('onCloseAddTaskModal');
+        setDraftChange(!draftChange);
+    };
     return (
         <DndProvider backend={HTML5Backend}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -61,7 +66,7 @@ const Tasks = () => {
                                 onLayoutChange={setCardLayout}
                                 cardLayout={cardLayout}
                             ></TaskLayoutToggle>
-                            <AddTaskModal>
+                            <AddTaskModal onCloseToggle={onCloseAddTaskModal}>
                                 <AddTask />
                             </AddTaskModal>
                         </Flex>
@@ -72,7 +77,7 @@ const Tasks = () => {
                                 p="3"
                                 alignItems="center"
                             >
-                                {draft && user.data.id && <Task task={draft} draft={true} />}
+                                <DraftTask draftChange={draftChange} />
                                 {tasks.map((task, i) => renderCard(task, i))}
                             </SimpleGrid>
                         </SortableTasks>

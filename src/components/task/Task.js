@@ -5,16 +5,17 @@ import { useTaskState } from '../../context/task/TaskProvider';
 import * as taskService from '../../api/services/Tasks';
 import { Tag, Flex, Box, Text, IconButton, useColorModeValue } from '@chakra-ui/react';
 import EditTaskModal from './EditTaskModal';
+import AddTaskModal from './AddTaskModal';
 
 const Task = ({ task, draft }) => {
     const { dispatch } = useTaskState();
-
+    console.log(task, 'TASK COMPONENTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTs');
     const onToggleReminder = (id) => {
         taskService.toggleReminder(id).then((res) => {
             toggleReminder(res.data, dispatch);
         });
     };
-    const formatedDay = task.day
+    const formatedDay = task?.day
         ? new Intl.DateTimeFormat('en-US', {
               dateStyle: 'full',
               timeStyle: 'long',
@@ -83,7 +84,11 @@ const Task = ({ task, draft }) => {
                     </Text>
                 </Flex>
                 <Flex wrap="nowrap" alignItems="center">
-                    <EditTaskModal task={task} />
+                    {draft ? (
+                        <AddTaskModal buttonSize={20} buttonText="Save Draft" />
+                    ) : (
+                        <EditTaskModal task={task} />
+                    )}
                     {/* <Link to={`/tasks/edit/${!draft ? task.id : ''}`} className="rightPadding">
                         <FaEdit style={{ color: 'lightslategrey' }} size={30} />
                     </Link> */}
