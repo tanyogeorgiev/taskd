@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -14,7 +14,6 @@ import DraggableTask from './DraggableTask';
 import SortableTasks from './SortableTask';
 import TaskLayoutToggle from './TaskLayoutToggle';
 import AddTaskModal from './AddTaskModal';
-import AddTask from './AddTask';
 import DraftTask from './DraftTask';
 
 const Tasks = () => {
@@ -22,11 +21,6 @@ const Tasks = () => {
     const { user } = useUserState();
     const [cardLayout, setCardLayout] = useState(false);
     const [draftChange, setDraftChange] = useState(true);
-
-    const onCloseAddTaskModal = useCallback(() => {
-        console.log('onCloseAddTaskModal');
-        setDraftChange(!draftChange);
-    }, [draftChange]);
 
     useEffect(() => {
         const getTasks = async () => {
@@ -55,6 +49,11 @@ const Tasks = () => {
                 <button onClick={resetErrorBoundary}>Try again</button>
             </div>
         );
+    };
+
+    const onCloseAddTaskModal = () => {
+        console.log('onCloseAddTaskModal');
+        setDraftChange(!draftChange);
     };
 
     return (
