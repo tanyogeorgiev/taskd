@@ -81,7 +81,7 @@ const Header = ({ title }) => {
                 <>
                     <Heading pt={10} as="h1" size="4xl" color="gray.600">
                         Wellcome to{' '}
-                        <Text as="span" color="gray.800">
+                        <Text as="span" color="gray.700">
                             TASKD.
                         </Text>
                     </Heading>
