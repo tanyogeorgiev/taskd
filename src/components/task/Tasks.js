@@ -23,7 +23,6 @@ const Tasks = () => {
     const { user } = useUserState();
     const [cardLayout, setCardLayout] = useState(false);
     const [draftChange, setDraftChange] = useState(true);
-
     useEffect(() => {
         const getTasks = async () => {
             if (user.data.id && tasks.length === 0) {

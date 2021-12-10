@@ -1,13 +1,11 @@
 import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Text, useToast } from '@chakra-ui/react';
 
 import { useTaskState } from '../../context/task/TaskProvider';
 import { useUserState } from '../../context/user/UserProvider';
-
 import updateTask from '../../context/task/actions/updateTask';
-
 import * as taskService from '../../api/services/Tasks';
-import { Text } from '@chakra-ui/react';
 
 import TaskForm from './TaskForm';
 
@@ -19,6 +17,8 @@ const EditTask = ({ onCancel, task }) => {
     //Context states
     const { tasks, dispatch } = useTaskState();
     const { user } = useUserState();
+    const toast = useToast();
+
     let localTask = { ...task };
 
     if (!id) {
@@ -45,6 +45,13 @@ const EditTask = ({ onCancel, task }) => {
 
         await taskService.update({ ...formTask, id: parseInt(id) }).then((res) => {
             updateTask(res.data, dispatch);
+            toast({
+                title: 'Task Information Center.',
+                description: 'You are successfully Edit the task',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            });
         });
 
         onCancel ? onCancel() : navigate('/tasks/all');

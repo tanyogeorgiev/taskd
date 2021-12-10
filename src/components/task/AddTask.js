@@ -8,10 +8,12 @@ import { useUserState } from '../../context/user/UserProvider';
 import addTask from '../../context/task/actions/addTask';
 
 import * as taskService from '../../api/services/Tasks';
-import { Text, Button } from '@chakra-ui/react';
+import { Text, Button, toast, useToast } from '@chakra-ui/react';
 import TaskForm from './TaskForm';
 
 const AddTask = ({ onCancel }) => {
+    const toast = useToast();
+
     //Task local state
     const [localDraft, setLocalDraft] = useState();
     const navigate = useNavigate();
@@ -41,6 +43,13 @@ const AddTask = ({ onCancel }) => {
             .then(async (res) => {
                 addTask(res.data, dispatch);
                 setDraft();
+                toast({
+                    title: 'Task Information Center.',
+                    description: 'You are successfully Add new task',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                });
             });
         onCancel ? onCancel() : navigate('/tasks/all');
     };

@@ -2,12 +2,21 @@ import { useNavigate } from 'react-router-dom';
 import login from '../../context/user/actions/login';
 import { useUserState } from '../../context/user/UserProvider';
 import * as userService from '../../api/services/Users';
-import { Input, InputGroup, InputLeftElement, Button, Stack, Container } from '@chakra-ui/react';
+import {
+    Input,
+    InputGroup,
+    InputLeftElement,
+    Button,
+    Stack,
+    Container,
+    useToast,
+} from '@chakra-ui/react';
 import { FaUserCircle } from 'react-icons/fa';
 
 const Login = () => {
     const navigate = useNavigate();
     const { dispatch } = useUserState();
+    const toast = useToast();
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -20,12 +29,24 @@ const Login = () => {
             .login(userName)
             .then((res) => {
                 login(res.data[0], dispatch);
+                navigate('/tasks/all');
+                toast({
+                    title: 'Auth Information Center',
+                    description: 'You are successfully logged in.',
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                });
             })
             .catch((err) => {
-                alert(err);
+                toast({
+                    title: 'Auth Information Center',
+                    description: err.message,
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                });
             });
-
-        navigate('/tasks/all');
     };
 
     return (

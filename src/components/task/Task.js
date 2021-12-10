@@ -3,12 +3,13 @@ import deleteTask from '../../context/task/actions/deleteTask';
 import toggleReminder from '../../context/task/actions/toggleReminder';
 import { useTaskState } from '../../context/task/TaskProvider';
 import * as taskService from '../../api/services/Tasks';
-import { Tag, Flex, Box, Text, IconButton, useColorModeValue } from '@chakra-ui/react';
+import { Tag, Flex, Box, Text, IconButton, useColorModeValue, useToast } from '@chakra-ui/react';
 import EditTaskModal from './EditTaskModal';
 import AddTaskModal from './AddTaskModal';
 
 const Task = ({ task, draft, onAddModalClose }) => {
     const { dispatch } = useTaskState();
+    const toast = useToast();
 
     const onToggleReminder = (id) => {
         taskService.toggleReminder(id).then((res) => {
@@ -38,6 +39,13 @@ const Task = ({ task, draft, onAddModalClose }) => {
     const onDeleteTask = (id) => {
         taskService.remove(id).then(() => {
             deleteTask(id, dispatch);
+            toast({
+                title: 'Task Information Center.',
+                description: 'You are successfully Delete the task',
+                status: 'warning',
+                duration: 3000,
+                isClosable: true,
+            });
         });
     };
 
