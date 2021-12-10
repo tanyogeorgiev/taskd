@@ -6,14 +6,19 @@ import {
     LOGOUT_USER,
     DELETE_TASKS,
     REORDER_TASKS,
+    TASK_LOADING,
 } from '../actionTypes';
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case TASK_LOADING:
+            return { ...state, loading: action.payload };
+
         case GET_TASKS:
             return {
                 ...state,
                 tasks: action.payload,
+                loading: false,
             };
         case DELETE_TASKS:
             return {

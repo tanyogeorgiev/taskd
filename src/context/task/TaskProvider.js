@@ -12,6 +12,7 @@ const TaskProvider = ({ children, value }) => {
         <GlobalContext.Provider
             value={{
                 tasks: state.tasks,
+                loading: state.loading,
                 dispatch,
             }}
         >

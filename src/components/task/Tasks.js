@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { SimpleGrid, Flex, Text } from '@chakra-ui/react';
+import { SimpleGrid, Flex, Text, Spinner } from '@chakra-ui/react';
 
 import getTask from '../../context/task/actions/getTasks';
+
 import { useTaskState } from '../../context/task/TaskProvider';
 import { useUserState } from '../../context/user/UserProvider';
 import * as taskService from '../../api/services/Tasks';
@@ -15,9 +16,10 @@ import SortableTasks from './SortableTask';
 import TaskLayoutToggle from './TaskLayoutToggle';
 import AddTaskModal from './AddTaskModal';
 import DraftTask from './DraftTask';
+import taskSpinner from '../../context/task/actions/taskSpinner';
 
 const Tasks = () => {
-    const { tasks, dispatch } = useTaskState();
+    const { tasks, loading, dispatch } = useTaskState();
     const { user } = useUserState();
     const [cardLayout, setCardLayout] = useState(false);
     const [draftChange, setDraftChange] = useState(true);
@@ -25,8 +27,12 @@ const Tasks = () => {
     useEffect(() => {
         const getTasks = async () => {
             if (user.data.id && tasks.length === 0) {
+                taskSpinner(true, dispatch);
                 await taskService.get(user.data.id).then((res) => {
-                    getTask(res.data, dispatch);
+                    //little bit delay to simulate slow network
+                    setTimeout(() => {
+                        getTask(res.data, dispatch);
+                    }, 500);
                 });
             }
         };
@@ -56,6 +62,7 @@ const Tasks = () => {
         setDraftChange(!draftChange);
     };
 
+    console.log('this is tasks:', loading);
     return (
         <DndProvider backend={HTML5Backend}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -76,6 +83,17 @@ const Tasks = () => {
                                 alignItems="center"
                             >
                                 <DraftTask draftChange={draftChange} />
+                                <Flex justifyContent="center">
+                                    {loading && (
+                                        <Spinner
+                                            thickness="4px"
+                                            speed="0.65s"
+                                            emptyColor="gray.200"
+                                            color="red.500"
+                                            size="xl"
+                                        />
+                                    )}
+                                </Flex>
                                 {tasks.map((task, i) => renderCard(task, i))}
                             </SimpleGrid>
                         </SortableTasks>
