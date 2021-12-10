@@ -3,7 +3,7 @@ import { useColorMode } from '@chakra-ui/react';
 
 const DarkModeStatus = () => {
     const { colorMode } = useColorMode();
-    return colorMode ? 'Dark' : 'Light';
+    return colorMode;
 };
 
 export default DarkModeStatus;

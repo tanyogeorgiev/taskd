@@ -7,8 +7,7 @@ const About = () => {
         <Box>
             <Text> Version 1.0.1</Text>
             <Text>
-                Current Theme mode is:
-                <DarkModeStatus />
+                Current Theme mode is: <DarkModeStatus />
             </Text>
             <Link to="/tasks/all">View tasks.</Link>
         </Box>
