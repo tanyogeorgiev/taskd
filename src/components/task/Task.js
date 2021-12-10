@@ -7,9 +7,9 @@ import { Tag, Flex, Box, Text, IconButton, useColorModeValue } from '@chakra-ui/
 import EditTaskModal from './EditTaskModal';
 import AddTaskModal from './AddTaskModal';
 
-const Task = ({ task, draft }) => {
+const Task = ({ task, draft, onAddModalClose }) => {
     const { dispatch } = useTaskState();
-    console.log(task, 'TASK COMPONENTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTs');
+
     const onToggleReminder = (id) => {
         taskService.toggleReminder(id).then((res) => {
             toggleReminder(res.data, dispatch);
@@ -85,7 +85,11 @@ const Task = ({ task, draft }) => {
                 </Flex>
                 <Flex wrap="nowrap" alignItems="center">
                     {draft ? (
-                        <AddTaskModal buttonSize={20} buttonText="Save Draft" />
+                        <AddTaskModal
+                            buttonSize={20}
+                            buttonText="Save Draft"
+                            onCloseToggle={onAddModalClose}
+                        />
                     ) : (
                         <EditTaskModal task={task} />
                     )}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -22,6 +22,11 @@ const Tasks = () => {
     const { user } = useUserState();
     const [cardLayout, setCardLayout] = useState(false);
     const [draftChange, setDraftChange] = useState(true);
+
+    const onCloseAddTaskModal = useCallback(() => {
+        console.log('onCloseAddTaskModal');
+        setDraftChange(!draftChange);
+    }, [draftChange]);
 
     useEffect(() => {
         const getTasks = async () => {
@@ -52,10 +57,6 @@ const Tasks = () => {
         );
     };
 
-    const onCloseAddTaskModal = () => {
-        console.log('onCloseAddTaskModal');
-        setDraftChange(!draftChange);
-    };
     return (
         <DndProvider backend={HTML5Backend}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -66,9 +67,7 @@ const Tasks = () => {
                                 onLayoutChange={setCardLayout}
                                 cardLayout={cardLayout}
                             ></TaskLayoutToggle>
-                            <AddTaskModal onCloseToggle={onCloseAddTaskModal}>
-                                <AddTask />
-                            </AddTaskModal>
+                            <AddTaskModal onCloseToggle={onCloseAddTaskModal} />
                         </Flex>
                         <SortableTasks>
                             <SimpleGrid

@@ -8,7 +8,7 @@ const AddTaskModal = ({ onCloseToggle, buttonSize, buttonText }) => {
 
     const onCloseModal = () => {
         console.log('cancel 3');
-        onCloseToggle();
+        if (onCloseToggle) onCloseToggle();
         setCloseModal(!closeModal);
     };
     console.log('closeModal component', closeModal);
